@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import <Parse/Parse.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface MainViewController ()
 
@@ -40,6 +41,9 @@
 //        NSLog(@"GTFO");
 //    }
     
+    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile",@"email",@"user_friends"]];
+    loginView.frame = CGRectOffset(loginView.frame, (self.view.center.x - (loginView.frame.size.width/2)), (self.view.frame.size.height - (loginView.frame.size.height + 5)));
+    [self.view addSubview:loginView];
     
 }
 

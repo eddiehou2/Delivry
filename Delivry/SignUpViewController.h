@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
+@property (strong, nonatomic) UIAlertController *alertController;
 
 - (IBAction)signUpUser:(id)sender;
 - (IBAction)cancelled:(id)sender;

@@ -8,6 +8,8 @@
 
 #import "HomeViewController.h"
 #import "CreateRestaurantViewController.h"
+#import "RestaurantTableViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface HomeViewController ()
 
@@ -23,6 +25,11 @@
     // Do any additional setup after loading the view.
     locationManager = [[CLLocationManager alloc] init];
     [self updateLocation:nil];
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(displayRestaurantList)];
+    tapRecognizer.numberOfTapsRequired = 2;
+    tapRecognizer.numberOfTouchesRequired = 1;
+    [self.nearbyRestaurantDisplay addGestureRecognizer:tapRecognizer];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,7 +69,7 @@
     
     
     // Retrieving Nearby Restaurants
-    [self retrieveNearbyRestaurantsWithGeoPoint:currentLocation withinKilometers:10.0];
+    [self retrieveNearbyRestaurantsWithGeoPoint:currentLocation withinKilometers:5.0f];
 }
 
 - (void) alertMessage:(NSString *)message title:(NSString *)title {
@@ -99,6 +106,16 @@
         self.nearbyRestaurantDisplay.text = [NSString stringWithFormat:@"%@\n%@\n",self.nearbyRestaurantDisplay.text,nearbyRestaurant];
     }
     NSLog(@"populateNearbyRestaurantDisplay Success! count: %lu",(unsigned long)[self.nearbyRestaurants count]);
+}
+
+-(void) displayRestaurantList {
+    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    RestaurantTableViewController *rtvc = [mainStoryBoard instantiateViewControllerWithIdentifier:@"restaurantTableViewController"];
+    rtvc.currentLocation = self.currentLocation;
+    rtvc.restaurants = self.nearbyRestaurants;
+    
+    [self.navigationController pushViewController:rtvc animated:YES];
+    NSLog(@"Not working?");
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

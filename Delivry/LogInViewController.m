@@ -73,14 +73,14 @@
 }
 
 - (IBAction)cancelled:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) successfulLogIn:(PFUser *) user {
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     HomeViewController *vc = [mainStoryBoard instantiateViewControllerWithIdentifier:@"homeViewController"];
     vc.user = user;
-    [self presentViewController:vc animated:YES completion:nil];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void) alertMessage:(NSString *)message title:(NSString *)title {

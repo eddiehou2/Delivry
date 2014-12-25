@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface AppDelegate ()
 
@@ -21,6 +22,11 @@
     [Parse setApplicationId:@"hBa1XUtZDS7CVVvq03VVPSqd1umCPPFrPNsangKi"
                   clientKey:@"hACU5cMTXFb8DNDVfnDi9hsmJYHnPj5kfZXat5iN"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FirstViewController"]];
+    [self.window setRootViewController:navigationController];
+    navigationController.delegate = self;
+    navigationController.navigationBarHidden = YES;
     
     return YES;
 }
@@ -46,5 +52,14 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    
+    return wasHandled;
+    
+}
+
+
 
 @end

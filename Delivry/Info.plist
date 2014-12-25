@@ -34,6 +34,19 @@
 	<string>Location is required to find out where you are</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Location is required to find out where you are</string>
+	<key>FacebookAppID</key>
+	<string>637208679734262</string>
+	<key>FacebookDisplayName</key>
+	<string>Delivry</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb637208679734262</string>
+			</array>
+		</dict>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

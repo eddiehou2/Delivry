@@ -69,36 +69,36 @@
         [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
                 [self alertMessage:@"You have successfully signed up! Please confirm your email." title:@"Success:"];
+                [self successfulSignUp:user.username];
             }
             else {
                 [self alertMessage:@"Something went wrong! Please try again." title:@"Error:"];
             }
         }];
-        [self successfulSignUp:user.username];
         
     }
 }
 
 - (IBAction)cancelled:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) successfulSignUp:(NSString *) username {
     UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     LogInViewController *logInViewControl = [mainStoryBoard instantiateViewControllerWithIdentifier:@"logInViewController"];
     logInViewControl.usernameField.text = username;
-    [self presentViewController:logInViewControl animated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) alertMessage:(NSString *)message title:(NSString *)title {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    self.alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [alertController dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController popViewControllerAnimated:YES];
     }];
     
-    [alertController addAction:ok];
+    [self.alertController addAction:ok];
     
-    [self presentViewController:alertController animated:YES completion:nil];
+    [self presentViewController:self.alertController animated:YES completion:nil];
 }
 @end

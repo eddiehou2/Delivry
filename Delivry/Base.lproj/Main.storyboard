@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Main View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="MainViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FirstViewController" id="vXZ-lx-hvc" customClass="MainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -48,19 +48,6 @@
                                     <segue destination="vrq-vx-ymb" kind="show" identifier="signUp" id="PyI-rW-EdF"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CO2-rm-O4b">
-                                <rect key="frame" x="240" y="530" width="120" height="30"/>
-                                <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="AYg-uh-gXo"/>
-                                    <constraint firstAttribute="width" constant="120" id="K0E-eb-KjH"/>
-                                    <constraint firstAttribute="height" constant="30" id="MM5-g3-hVM"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="x9J-00-z3U"/>
-                                </constraints>
-                                <state key="normal" title="Use Facebook">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="app_icon_clear" translatesAutoresizingMaskIntoConstraints="NO" id="Gdq-fJ-ULO">
                                 <rect key="frame" x="270" y="80" width="60" height="60"/>
                                 <constraints>
@@ -74,13 +61,11 @@
                             <constraint firstAttribute="bottomMargin" secondItem="D4S-5Q-Pbd" secondAttribute="bottom" id="14O-RG-1bU"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="lh2-4R-7ii" secondAttribute="bottom" constant="80" id="E4h-Ef-Gjm"/>
                             <constraint firstAttribute="centerX" secondItem="lh2-4R-7ii" secondAttribute="centerX" constant="134" id="GD4-lZ-3jX"/>
-                            <constraint firstAttribute="centerX" secondItem="CO2-rm-O4b" secondAttribute="centerX" id="WTX-is-8su"/>
                             <constraint firstItem="D4S-5Q-Pbd" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="WvE-vp-5A5"/>
                             <constraint firstItem="Gdq-fJ-ULO" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="60" id="ZJM-et-lMv"/>
                             <constraint firstAttribute="centerX" secondItem="1Uy-fM-nuW" secondAttribute="centerX" constant="-134.5" id="c44-WS-hvP"/>
                             <constraint firstItem="D4S-5Q-Pbd" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="gjj-Hk-AKr"/>
                             <constraint firstAttribute="centerX" secondItem="Gdq-fJ-ULO" secondAttribute="centerX" id="ilg-Sv-yz4"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="CO2-rm-O4b" secondAttribute="bottom" constant="40" id="kyR-oZ-Vv2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="D4S-5Q-Pbd" secondAttribute="trailing" id="qzI-Zz-VLw"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="1Uy-fM-nuW" secondAttribute="bottom" constant="80" id="w3d-hI-w9U"/>
                         </constraints>
@@ -473,6 +458,32 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xtd-Sc-c8Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1287" y="880"/>
+        </scene>
+        <!--Restaurant Table View Controller-->
+        <scene sceneID="lja-YT-yTD">
+            <objects>
+                <tableViewController storyboardIdentifier="restaurantTableViewController" id="7tn-Pu-DIS" customClass="RestaurantTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="H0S-0Q-pC2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="ICT-RI-qhe">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ICT-RI-qhe" id="NdU-Du-Tfe">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="7tn-Pu-DIS" id="mwE-I2-T51"/>
+                            <outlet property="delegate" destination="7tn-Pu-DIS" id="vnZ-kI-RgL"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BWg-cD-hvo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1287" y="1596"/>
         </scene>
         <!--Create Restaurant View Controller-->
         <scene sceneID="EOO-Q2-zSZ">

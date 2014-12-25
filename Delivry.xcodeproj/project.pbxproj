@@ -34,6 +34,8 @@
 		6EE81FCE1A2425CE002E93C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EE81FCD1A2425CE002E93C7 /* Images.xcassets */; };
 		6EE81FD11A2425CE002E93C7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EE81FCF1A2425CE002E93C7 /* LaunchScreen.xib */; };
 		6EE81FDD1A2425CE002E93C7 /* DelivryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81FDC1A2425CE002E93C7 /* DelivryTests.m */; };
+		7AD9FA971A4B4F210021611D /* RestaurantTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD9FA961A4B4F210021611D /* RestaurantTableViewController.m */; };
+		7AD9FA9B1A4B73A10021611D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AD9FA9A1A4B73A10021611D /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +88,9 @@
 		6EE81FD61A2425CE002E93C7 /* DelivryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DelivryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE81FDB1A2425CE002E93C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6EE81FDC1A2425CE002E93C7 /* DelivryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DelivryTests.m; sourceTree = "<group>"; };
+		7AD9FA951A4B4F210021611D /* RestaurantTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantTableViewController.h; sourceTree = "<group>"; };
+		7AD9FA961A4B4F210021611D /* RestaurantTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantTableViewController.m; sourceTree = "<group>"; };
+		7AD9FA9A1A4B73A10021611D /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +109,7 @@
 				6EC567591A29172F00F51EFF /* CFNetwork.framework in Frameworks */,
 				6EC567571A29172500F51EFF /* AudioToolbox.framework in Frameworks */,
 				6EC567531A29170100F51EFF /* Parse.framework in Frameworks */,
+				7AD9FA9B1A4B73A10021611D /* FacebookSDK.framework in Frameworks */,
 				6EC567521A29170100F51EFF /* Bolts.framework in Frameworks */,
 				6EC567551A29170100F51EFF /* ParseUI.framework in Frameworks */,
 				6EC567541A29170100F51EFF /* ParseFacebookUtils.framework in Frameworks */,
@@ -123,6 +129,7 @@
 		6EC5676A1A2917EF00F51EFF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7AD9FA9A1A4B73A10021611D /* FacebookSDK.framework */,
 				6EC567501A29170100F51EFF /* ParseFacebookUtils.framework */,
 				6EC5674F1A29170100F51EFF /* Parse.framework */,
 				6EC567581A29172F00F51EFF /* CFNetwork.framework */,
@@ -183,6 +190,8 @@
 				6EC5676C1A2919CA00F51EFF /* User.m */,
 				6EC5676E1A2919DE00F51EFF /* Restaurant.h */,
 				6EC5676F1A2919DE00F51EFF /* Restaurant.m */,
+				7AD9FA951A4B4F210021611D /* RestaurantTableViewController.h */,
+				7AD9FA961A4B4F210021611D /* RestaurantTableViewController.m */,
 			);
 			path = Delivry;
 			sourceTree = "<group>";
@@ -315,6 +324,7 @@
 			files = (
 				6EC5676D1A2919CA00F51EFF /* User.m in Sources */,
 				6EC567701A2919DE00F51EFF /* Restaurant.m in Sources */,
+				7AD9FA971A4B4F210021611D /* RestaurantTableViewController.m in Sources */,
 				6EC567731A29266F00F51EFF /* LogInViewController.m in Sources */,
 				6EE81FC91A2425CE002E93C7 /* MainViewController.m in Sources */,
 				6EE81FC61A2425CE002E93C7 /* AppDelegate.m in Sources */,
@@ -446,6 +456,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Delivry",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Delivry/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -460,6 +471,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Delivry",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Delivry/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
