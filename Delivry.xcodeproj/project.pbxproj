@@ -34,6 +34,8 @@
 		6EE81FCE1A2425CE002E93C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EE81FCD1A2425CE002E93C7 /* Images.xcassets */; };
 		6EE81FD11A2425CE002E93C7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EE81FCF1A2425CE002E93C7 /* LaunchScreen.xib */; };
 		6EE81FDD1A2425CE002E93C7 /* DelivryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81FDC1A2425CE002E93C7 /* DelivryTests.m */; };
+		7A8932EA1A4E6A050060AFC8 /* RestaurantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8932E81A4E6A050060AFC8 /* RestaurantTableViewCell.m */; };
+		7A8932EB1A4E6A050060AFC8 /* RestaurantTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A8932E91A4E6A050060AFC8 /* RestaurantTableViewCell.xib */; };
 		7AD9FA971A4B4F210021611D /* RestaurantTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD9FA961A4B4F210021611D /* RestaurantTableViewController.m */; };
 		7AD9FA9B1A4B73A10021611D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AD9FA9A1A4B73A10021611D /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
@@ -88,6 +90,9 @@
 		6EE81FD61A2425CE002E93C7 /* DelivryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DelivryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE81FDB1A2425CE002E93C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6EE81FDC1A2425CE002E93C7 /* DelivryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DelivryTests.m; sourceTree = "<group>"; };
+		7A8932E71A4E6A050060AFC8 /* RestaurantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantTableViewCell.h; sourceTree = "<group>"; };
+		7A8932E81A4E6A050060AFC8 /* RestaurantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantTableViewCell.m; sourceTree = "<group>"; };
+		7A8932E91A4E6A050060AFC8 /* RestaurantTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestaurantTableViewCell.xib; sourceTree = "<group>"; };
 		7AD9FA951A4B4F210021611D /* RestaurantTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantTableViewController.h; sourceTree = "<group>"; };
 		7AD9FA961A4B4F210021611D /* RestaurantTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantTableViewController.m; sourceTree = "<group>"; };
 		7AD9FA9A1A4B73A10021611D /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -192,6 +197,9 @@
 				6EC5676F1A2919DE00F51EFF /* Restaurant.m */,
 				7AD9FA951A4B4F210021611D /* RestaurantTableViewController.h */,
 				7AD9FA961A4B4F210021611D /* RestaurantTableViewController.m */,
+				7A8932E71A4E6A050060AFC8 /* RestaurantTableViewCell.h */,
+				7A8932E81A4E6A050060AFC8 /* RestaurantTableViewCell.m */,
+				7A8932E91A4E6A050060AFC8 /* RestaurantTableViewCell.xib */,
 			);
 			path = Delivry;
 			sourceTree = "<group>";
@@ -271,9 +279,11 @@
 				TargetAttributes = {
 					6EE81FBC1A2425CD002E93C7 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 382D63R7AL;
 					};
 					6EE81FD51A2425CE002E93C7 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 382D63R7AL;
 						TestTargetID = 6EE81FBC1A2425CD002E93C7;
 					};
 				};
@@ -302,6 +312,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A8932EB1A4E6A050060AFC8 /* RestaurantTableViewCell.xib in Resources */,
 				6EE81FCC1A2425CE002E93C7 /* Main.storyboard in Resources */,
 				6EE81FD11A2425CE002E93C7 /* LaunchScreen.xib in Resources */,
 				6EE81FCE1A2425CE002E93C7 /* Images.xcassets in Resources */,
@@ -322,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A8932EA1A4E6A050060AFC8 /* RestaurantTableViewCell.m in Sources */,
 				6EC5676D1A2919CA00F51EFF /* User.m in Sources */,
 				6EC567701A2919DE00F51EFF /* Restaurant.m in Sources */,
 				7AD9FA971A4B4F210021611D /* RestaurantTableViewController.m in Sources */,
@@ -483,6 +495,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -494,6 +508,7 @@
 				INFOPLIST_FILE = DelivryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Delivry.app/Delivry";
 			};
 			name = Debug;
@@ -502,6 +517,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -509,6 +526,7 @@
 				INFOPLIST_FILE = DelivryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Delivry.app/Delivry";
 			};
 			name = Release;

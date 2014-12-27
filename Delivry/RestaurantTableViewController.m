@@ -7,6 +7,7 @@
 //
 
 #import "RestaurantTableViewController.h"
+#import "RestaurantTableViewCell.h"
 #import <Parse/Parse.h>
 
 @interface RestaurantTableViewController ()
@@ -17,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.tableView registerNib:[UINib nibWithNibName:@"RestaurantTableViewCell" bundle:nil] forCellReuseIdentifier:@"Cell"];
 //    PFGeoPoint *currentPont = [PFGeoPoint geoPointWithLocation:self.currentLocation];
 //    
 //    PFQuery *query = [PFQuery queryWithClassName:@"Restaurants"];
@@ -39,6 +41,8 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    //NSLog(@"%@",self.restaurants);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,12 +63,18 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    RestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     
     // Configure the cell...
+    cell.image.image = [UIImage imageNamed:@"app_image"];
+    cell.nameLabel.text = [[self.restaurants objectAtIndex:indexPath.row] objectForKey:@"restaurantName"];
+    cell.descriptionLabel.text = [[self.restaurants objectAtIndex:indexPath.row] objectForKey:@"restaurantDescription"];
     
-    cell.textLabel.text = [[self.restaurants objectAtIndex:indexPath.row] objectForKey:@"restaurantName"];
-    cell.detailTextLabel.text = [[self.restaurants objectAtIndex:indexPath.row] objectForKey:@"restaurantDescription"];
+    cell.priceLabel.text = [NSString stringWithFormat:@"%@/5",[[self.restaurants objectAtIndex:indexPath.row] objectForKey:@"restaurantPrice"]];
+    cell.minimumLabel.text = [NSString stringWithFormat:@"$%@+",[[self.restaurants objectAtIndex:indexPath.row] objectForKey:@"restaurantMinimum"]];
+    PFGeoPoint *point = [[self.restaurants objectAtIndex:indexPath.row] objectForKey:@"restaurantLocation"];
+    cell.distanceLabel.text = [NSString stringWithFormat:@"%.2f km",[point distanceInKilometersTo:[PFGeoPoint geoPointWithLocation:self.currentLocation]]];
+    
     
     
     return cell;
