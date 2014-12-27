@@ -11,5 +11,7 @@
 @interface MainViewController : UIViewController
 
 
+- (IBAction)handleFacebookLogin:(id)sender;
+
 @end
 

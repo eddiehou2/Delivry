@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -55,11 +55,23 @@
                                     <constraint firstAttribute="width" constant="120" id="QMT-oI-Xng"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXc-hl-h56">
+                                <rect key="frame" x="245" y="550" width="111" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Facebook Login">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="handleFacebookLogin:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="W4p-TU-ZQg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottomMargin" secondItem="D4S-5Q-Pbd" secondAttribute="bottom" id="14O-RG-1bU"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="lh2-4R-7ii" secondAttribute="bottom" constant="80" id="E4h-Ef-Gjm"/>
+                            <constraint firstAttribute="centerX" secondItem="VXc-hl-h56" secondAttribute="centerX" id="Esj-Zz-FeY"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="VXc-hl-h56" secondAttribute="bottom" constant="20" id="Ey3-VC-9Iz"/>
                             <constraint firstAttribute="centerX" secondItem="lh2-4R-7ii" secondAttribute="centerX" constant="134" id="GD4-lZ-3jX"/>
                             <constraint firstItem="D4S-5Q-Pbd" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="WvE-vp-5A5"/>
                             <constraint firstItem="Gdq-fJ-ULO" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="60" id="ZJM-et-lMv"/>
@@ -463,15 +475,32 @@
         <scene sceneID="lja-YT-yTD">
             <objects>
                 <tableViewController storyboardIdentifier="restaurantTableViewController" id="7tn-Pu-DIS" customClass="RestaurantTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="H0S-0Q-pC2">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="H0S-0Q-pC2">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="ICT-RI-qhe">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="XTl-FN-4Tm" detailTextLabel="ddk-gB-Z4m" imageView="7Q3-Cb-yxa" rowHeight="100" style="IBUITableViewCellStyleSubtitle" id="ICT-RI-qhe">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ICT-RI-qhe" id="NdU-Du-Tfe">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XTl-FN-4Tm">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ddk-gB-Z4m">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="app_icon" id="7Q3-Cb-yxa">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </imageView>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -652,6 +681,7 @@
     </scenes>
     <resources>
         <image name="Image" width="1366" height="768"/>
+        <image name="app_icon" width="60" height="60"/>
         <image name="app_icon_clear" width="60" height="60"/>
     </resources>
 </document>

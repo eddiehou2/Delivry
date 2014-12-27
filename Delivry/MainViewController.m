@@ -7,10 +7,12 @@
 //
 
 #import "MainViewController.h"
+#import "HomeViewController.h"
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import <ParseFacebookUtils/PFFacebookUtils.h>
 
-@interface MainViewController ()
+@interface MainViewController () <FBLoginViewDelegate>
 
 @end
 
@@ -23,16 +25,16 @@
     testObject[@"foo"] = @"bar";
     [testObject saveInBackground];
     
-    PFQuery *query = [PFQuery queryWithClassName:@"Restaurants"];
-    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    [query orderByDescending:@"restaurantName"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
-        if (query.cachePolicy != kPFCachePolicyCacheOnly && error.code == kPFErrorCacheMiss) {
-            return;
-        }
-        NSLog(@"%@",objects);
-        
-    }];
+//    PFQuery *query = [PFQuery queryWithClassName:@"Restaurants"];
+//    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+//    [query orderByDescending:@"restaurantName"];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
+//        if (query.cachePolicy != kPFCachePolicyCacheOnly && error.code == kPFErrorCacheMiss) {
+//            return;
+//        }
+//        NSLog(@"%@",objects);
+//    
+//    }];
 //    PFUser *user = [PFUser logInWithUsername:@"eddiehou2" password:@"12345"];
 //    if (user.isAuthenticated) {
 //        NSLog(@"Legit");
@@ -41,10 +43,21 @@
 //        NSLog(@"GTFO");
 //    }
     
-    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile",@"email",@"user_friends"]];
-    loginView.frame = CGRectOffset(loginView.frame, (self.view.center.x - (loginView.frame.size.width/2)), (self.view.frame.size.height - (loginView.frame.size.height + 5)));
-    [self.view addSubview:loginView];
-    
+//    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile",@"email",@"user_friends"]];
+//    loginView.delegate = self;
+//    loginView.frame = CGRectOffset(loginView.frame, (self.view.center.x - (loginView.frame.size.width/2)), (self.view.frame.size.height - (loginView.frame.size.height + 5)));
+//    [self.view addSubview:loginView];
+//    
+//    if ([[FBSession activeSession] isOpen]) {
+//        [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+//            if (!error) {
+//                [self handleFacebookLogin:user];
+//            }
+//            else {
+//                NSLog(@"Error: MainViewController/viewDidLoad/startWithCompletionHandler");
+//            }
+//        }];
+//    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,4 +65,52 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user {
+    NSLog(@"%@ // %@ // %@ // %@",[user name],[user objectID],[user objectForKey:@"email"],[user objectForKey:@"friends"]);
+}
+
+- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
+    NSLog(@"Logged In");
+}
+
+- (void)redirectToHome: (PFUser *) user {
+    NSLog(@"Redirect");
+    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    HomeViewController *vc = [mainStoryBoard instantiateViewControllerWithIdentifier:@"homeViewController"];
+    vc.user = user;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (IBAction)handleFacebookLogin:(id)sender {
+    NSLog(@"handleFacebookLogin");
+    NSArray *permissionsArray = @[ @"email",@"public_profile" ];
+    [PFFacebookUtils initializeFacebook];
+    
+    // Login PFUser using Facebook
+    [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
+        if (!user) {
+            NSString *errorMessage = nil;
+            if (!error) {
+                NSLog(@"Uh oh. The user cancelled the Facebook login.");
+                errorMessage = @"Uh oh. The user cancelled the Facebook login.";
+            } else {
+                NSLog(@"Uh oh. An error occurred: %@", error);
+                errorMessage = [error localizedDescription];
+            }
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Log In Error" message:errorMessage delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Dismiss", nil];
+            
+            [alert show];
+        } else {
+            if (user.isNew) {
+                NSLog(@"User with facebook signed up and logged in!");
+            } else {
+                NSLog(@"User with facebook logged in!");
+            }
+            
+            [self redirectToHome:user];
+        }
+    }];
+    
+    NSLog(@"Exiting handleFacebookLogin");
+}
 @end
