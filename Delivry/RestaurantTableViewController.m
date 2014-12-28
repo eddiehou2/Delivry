@@ -8,6 +8,7 @@
 
 #import "RestaurantTableViewController.h"
 #import "RestaurantTableViewCell.h"
+#import "RestaurantDetailViewController.h"
 #import <Parse/Parse.h>
 
 @interface RestaurantTableViewController ()
@@ -18,7 +19,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.tableView registerNib:[UINib nibWithNibName:@"RestaurantTableViewCell" bundle:nil] forCellReuseIdentifier:@"Cell"];
 //    PFGeoPoint *currentPont = [PFGeoPoint geoPointWithLocation:self.currentLocation];
 //    
 //    PFQuery *query = [PFQuery queryWithClassName:@"Restaurants"];
@@ -63,7 +63,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    RestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    RestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     // Configure the cell...
     cell.image.image = [UIImage imageNamed:@"app_image"];
@@ -115,14 +115,20 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier  isEqual: @"showRestaurantDetails"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        RestaurantDetailViewController *rdvc = [segue destinationViewController];
+        rdvc.restaurant = [self.restaurants objectAtIndex:indexPath.row];
+        rdvc.currentLocation = self.currentLocation;
+    }
 }
-*/
+
 
 @end

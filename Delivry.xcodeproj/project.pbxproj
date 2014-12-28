@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E4F71951A4F808C004F47C0 /* RestaurantDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4F71941A4F808C004F47C0 /* RestaurantDetailViewController.m */; };
 		6EC567521A29170100F51EFF /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC5674E1A29170100F51EFF /* Bolts.framework */; };
 		6EC567531A29170100F51EFF /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC5674F1A29170100F51EFF /* Parse.framework */; };
 		6EC567541A29170100F51EFF /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC567501A29170100F51EFF /* ParseFacebookUtils.framework */; };
@@ -51,6 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E4F71931A4F808C004F47C0 /* RestaurantDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantDetailViewController.h; sourceTree = "<group>"; };
+		6E4F71941A4F808C004F47C0 /* RestaurantDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantDetailViewController.m; sourceTree = "<group>"; };
 		6EC5674E1A29170100F51EFF /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Delivry/Bolts.framework; sourceTree = "<group>"; };
 		6EC5674F1A29170100F51EFF /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Delivry/Parse.framework; sourceTree = "<group>"; };
 		6EC567501A29170100F51EFF /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtils.framework; path = Delivry/ParseFacebookUtils.framework; sourceTree = "<group>"; };
@@ -200,6 +203,8 @@
 				7A8932E71A4E6A050060AFC8 /* RestaurantTableViewCell.h */,
 				7A8932E81A4E6A050060AFC8 /* RestaurantTableViewCell.m */,
 				7A8932E91A4E6A050060AFC8 /* RestaurantTableViewCell.xib */,
+				6E4F71931A4F808C004F47C0 /* RestaurantDetailViewController.h */,
+				6E4F71941A4F808C004F47C0 /* RestaurantDetailViewController.m */,
 			);
 			path = Delivry;
 			sourceTree = "<group>";
@@ -337,6 +342,7 @@
 				6EC5676D1A2919CA00F51EFF /* User.m in Sources */,
 				6EC567701A2919DE00F51EFF /* Restaurant.m in Sources */,
 				7AD9FA971A4B4F210021611D /* RestaurantTableViewController.m in Sources */,
+				6E4F71951A4F808C004F47C0 /* RestaurantDetailViewController.m in Sources */,
 				6EC567731A29266F00F51EFF /* LogInViewController.m in Sources */,
 				6EE81FC91A2425CE002E93C7 /* MainViewController.m in Sources */,
 				6EE81FC61A2425CE002E93C7 /* AppDelegate.m in Sources */,
