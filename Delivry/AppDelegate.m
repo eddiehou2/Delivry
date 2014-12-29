@@ -7,11 +7,12 @@
 //
 
 #import "AppDelegate.h"
+#import "HomeViewController.h"
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 
-@interface AppDelegate ()
+@interface AppDelegate () 
 
 @end
 
@@ -24,10 +25,27 @@
                   clientKey:@"hACU5cMTXFb8DNDVfnDi9hsmJYHnPj5kfZXat5iN"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FirstViewController"]];
-    [self.window setRootViewController:navigationController];
-    navigationController.delegate = self;
-    navigationController.navigationBarHidden = YES;
+#warning needs to be changed later, current just placeholder
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    self.tabBarController = [[UITabBarController alloc] init];
+    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"viewControllerTest1"]];
+    navigationController1.title = @"Test 1";
+    navigationController1.navigationBar.topItem.title = @"Test 1";
+
+#warning needs to be changed later, current just placeholder
+    UINavigationController *navigationController2 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"viewControllerTest2"]];
+    navigationController2.title = @"Test 2";
+    navigationController2.navigationBar.topItem.title = @"Test 2";
+    
+    UINavigationController *navigationController3 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"]];
+    navigationController3.title = @"Home";
+    navigationController3.navigationBar.topItem.title = @"Home";
+    
+    NSArray *controllers = [NSArray arrayWithObjects:navigationController1,navigationController2,navigationController3, nil];
+    self.tabBarController.viewControllers = controllers;
+    
+    [self.window setRootViewController:self.tabBarController];
+    [self.window makeKeyAndVisible];
     
     return YES;
 }
