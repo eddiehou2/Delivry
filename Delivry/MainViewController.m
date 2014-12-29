@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "HomeViewController.h"
+#import "AboutMeViewController.h"
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
@@ -75,16 +76,15 @@
 
 - (void)redirectToHome: (PFUser *) user {
     NSLog(@"Redirect");
-    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    HomeViewController *vc = [mainStoryBoard instantiateViewControllerWithIdentifier:@"homeViewController"];
-    vc.user = user;
-    [self.navigationController pushViewController:vc animated:YES];
+//    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    HomeViewController *vc = [mainStoryBoard instantiateViewControllerWithIdentifier:@"homeViewController"];
+//    vc.user = user;
+    [self dismissViewControllerAnimated:YES completion:^{[self.aboutMeViewController loggedInWith:user];}];
 }
 
 - (IBAction)handleFacebookLogin:(id)sender {
     NSLog(@"handleFacebookLogin");
     NSArray *permissionsArray = @[ @"email",@"public_profile" ];
-    [PFFacebookUtils initializeFacebook];
     
     // Login PFUser using Facebook
     [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {

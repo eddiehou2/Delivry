@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class AboutMeViewController;
+@class PFUser;
+
 @interface MainViewController : UIViewController
 
-
+@property(nonatomic,weak) AboutMeViewController *aboutMeViewController;
 - (IBAction)handleFacebookLogin:(id)sender;
-
+- (void)redirectToHome: (PFUser *) user;
 @end
 

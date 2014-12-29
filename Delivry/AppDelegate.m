@@ -11,6 +11,7 @@
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
+#import "DEUser.h"
 
 @interface AppDelegate () 
 
@@ -25,12 +26,14 @@
                   clientKey:@"hACU5cMTXFb8DNDVfnDi9hsmJYHnPj5kfZXat5iN"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
+    [PFFacebookUtils initializeFacebook];
+    
 #warning needs to be changed later, current just placeholder
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.tabBarController = [[UITabBarController alloc] init];
-    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"viewControllerTest1"]];
-    navigationController1.title = @"Test 1";
-    navigationController1.navigationBar.topItem.title = @"Test 1";
+    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"aboutMeViewController"]];
+    navigationController1.title = @"About Me";
+    navigationController1.navigationBar.topItem.title = @"About Me";
 
 #warning needs to be changed later, current just placeholder
     UINavigationController *navigationController2 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"viewControllerTest2"]];

@@ -8,6 +8,7 @@
 
 #import "LogInViewController.h"
 #import "HomeViewController.h"
+#import "MainViewController.h"
 
 @interface LogInViewController ()
 
@@ -77,10 +78,11 @@
 }
 
 - (void) successfulLogIn:(PFUser *) user {
-    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    HomeViewController *vc = [mainStoryBoard instantiateViewControllerWithIdentifier:@"homeViewController"];
-    vc.user = user;
-    [self.navigationController pushViewController:vc animated:YES];
+//    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    HomeViewController *vc = [mainStoryBoard instantiateViewControllerWithIdentifier:@"homeViewController"];
+//    vc.user = user;
+    MainViewController *mainViewController = (MainViewController *) self.navigationController.parentViewController;
+    [self dismissViewControllerAnimated:YES completion:^{[mainViewController redirectToHome:user];}];
 }
 
 - (void) alertMessage:(NSString *)message title:(NSString *)title {

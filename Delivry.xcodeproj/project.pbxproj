@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E1B31641A51F34F002A7C8C /* AboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1B31631A51F34F002A7C8C /* AboutMeViewController.m */; };
+		6E1B31671A51FCF3002A7C8C /* DEUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1B31661A51FCF3002A7C8C /* DEUser.m */; };
 		6E4F71951A4F808C004F47C0 /* RestaurantDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4F71941A4F808C004F47C0 /* RestaurantDetailViewController.m */; };
 		6EC567521A29170100F51EFF /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC5674E1A29170100F51EFF /* Bolts.framework */; };
 		6EC567531A29170100F51EFF /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC5674F1A29170100F51EFF /* Parse.framework */; };
@@ -52,6 +54,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E1B31621A51F34F002A7C8C /* AboutMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutMeViewController.h; sourceTree = "<group>"; };
+		6E1B31631A51F34F002A7C8C /* AboutMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutMeViewController.m; sourceTree = "<group>"; };
+		6E1B31651A51FCF3002A7C8C /* DEUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEUser.h; sourceTree = "<group>"; };
+		6E1B31661A51FCF3002A7C8C /* DEUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEUser.m; sourceTree = "<group>"; };
 		6E4F71931A4F808C004F47C0 /* RestaurantDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantDetailViewController.h; sourceTree = "<group>"; };
 		6E4F71941A4F808C004F47C0 /* RestaurantDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantDetailViewController.m; sourceTree = "<group>"; };
 		6EC5674E1A29170100F51EFF /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Delivry/Bolts.framework; sourceTree = "<group>"; };
@@ -205,6 +211,10 @@
 				7A8932E91A4E6A050060AFC8 /* RestaurantTableViewCell.xib */,
 				6E4F71931A4F808C004F47C0 /* RestaurantDetailViewController.h */,
 				6E4F71941A4F808C004F47C0 /* RestaurantDetailViewController.m */,
+				6E1B31621A51F34F002A7C8C /* AboutMeViewController.h */,
+				6E1B31631A51F34F002A7C8C /* AboutMeViewController.m */,
+				6E1B31651A51FCF3002A7C8C /* DEUser.h */,
+				6E1B31661A51FCF3002A7C8C /* DEUser.m */,
 			);
 			path = Delivry;
 			sourceTree = "<group>";
@@ -338,6 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E1B31671A51FCF3002A7C8C /* DEUser.m in Sources */,
 				7A8932EA1A4E6A050060AFC8 /* RestaurantTableViewCell.m in Sources */,
 				6EC5676D1A2919CA00F51EFF /* User.m in Sources */,
 				6EC567701A2919DE00F51EFF /* Restaurant.m in Sources */,
@@ -350,6 +361,7 @@
 				6EC567801A2A630500F51EFF /* CreateRestaurantViewController.m in Sources */,
 				6EE81FC31A2425CE002E93C7 /* main.m in Sources */,
 				6EC567791A29648300F51EFF /* HomeViewController.m in Sources */,
+				6E1B31641A51F34F002A7C8C /* AboutMeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
