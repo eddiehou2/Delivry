@@ -11,7 +11,7 @@
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
-#import "DEUser.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 @interface AppDelegate () 
 
@@ -27,6 +27,8 @@
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     [PFFacebookUtils initializeFacebook];
+    
+    [GMSServices provideAPIKey:@"AIzaSyCzdXSESxSJATrkF3y_WndcIos_seuIoHY"];
     
 #warning needs to be changed later, current just placeholder
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

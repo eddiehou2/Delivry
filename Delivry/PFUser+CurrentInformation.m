@@ -1,29 +1,31 @@
 //
-//  delivryUser.m
+//  PFUser+CurrentInformation.m
 //  Delivry
 //
-//  Created by Eddie Hou on 2014-12-29.
+//  Created by Eddie Hou on 2014-12-30.
 //  Copyright (c) 2014 Eddie Hou. All rights reserved.
 //
 
-#import "DEUser.h"
+#import "PFUser+CurrentInformation.h"
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 
-@implementation DEUser
+@implementation PFUser (CurrentInformation)
 
-+(DEUser *) getInformationFromCurrentUser {
-    DEUser *currentUser = (DEUser *)[DEUser currentUser];
++(PFUser *) getInformationFromCurrentUser {
+    PFUser *currentUser = [PFUser currentUser];
     if (currentUser != nil) {
         
-        DEUser *user = currentUser;
+        PFUser *user = currentUser;
         if ([PFFacebookUtils isLinkedWithUser:currentUser]) {
             FBRequest *request = [FBRequest requestForMe];
             [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                 if (!error) {
                     NSDictionary *userData = (NSDictionary *)result;
-                    
+                    NSLog(@"ALL: %@", userData);
                     user.name = userData[@"name"];
+                    NSLog(@"%@",user.name);
                     user.email = userData[@"email"];
+                    NSLog(@"%@",user.email);
                     user.number = userData[@"number"];
                     user.friends = userData[@"friends"];
                 }
@@ -52,5 +54,6 @@
         return nil;
     }
 }
+
 
 @end

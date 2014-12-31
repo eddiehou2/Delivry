@@ -9,11 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@class DEUser;
-
 @interface AboutMeViewController : UIViewController
 
-@property (nonatomic, weak) DEUser *user;
+@property (nonatomic, weak) PFUser *user;
 
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UILabel *name;
