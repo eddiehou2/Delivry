@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "HomeViewController.h"
 #import "AboutMeViewController.h"
+#import "LogInViewController.h"
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
@@ -112,5 +113,12 @@
     }];
     
     NSLog(@"Exiting handleFacebookLogin");
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"logIn"]) {
+        LogInViewController *logInViewController = (LogInViewController *) segue.destinationViewController;
+        logInViewController.mainViewController = self;
+    }
 }
 @end

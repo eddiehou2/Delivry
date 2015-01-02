@@ -81,8 +81,8 @@
 //    UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 //    HomeViewController *vc = [mainStoryBoard instantiateViewControllerWithIdentifier:@"homeViewController"];
 //    vc.user = user;
-    MainViewController *mainViewController = (MainViewController *) self.navigationController.parentViewController;
-    [self dismissViewControllerAnimated:YES completion:^{[mainViewController redirectToHome:user];}];
+    NSLog(@"successfulLogIn");
+    [self dismissViewControllerAnimated:YES completion:^{[self.mainViewController redirectToHome:user];}];
 }
 
 - (void) alertMessage:(NSString *)message title:(NSString *)title {

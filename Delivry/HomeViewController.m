@@ -62,6 +62,10 @@
         self.currentLocation = currentLocation;
         self.longtitudeLabel.text = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.longitude];
         self.latitudeLabel.text = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.latitude];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:self.longtitudeLabel.text forKey:@"currentLongitude"];
+        [defaults setObject:self.latitudeLabel.text forKey:@"currentLatitude"];
+        [defaults synchronize];
     }
     
     // Stop Location Manager

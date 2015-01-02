@@ -28,23 +28,23 @@
     
     [PFFacebookUtils initializeFacebook];
     
-    [GMSServices provideAPIKey:@"AIzaSyCzdXSESxSJATrkF3y_WndcIos_seuIoHY"];
+    [GMSServices provideAPIKey:@"AIzaSyCzdXSESxSJATrkF3y_WmdcIos_seuIoHY"];
     
 #warning needs to be changed later, current just placeholder
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.tabBarController = [[UITabBarController alloc] init];
-    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"aboutMeViewController"]];
-    navigationController1.title = @"About Me";
-    navigationController1.navigationBar.topItem.title = @"About Me";
+    UINavigationController *navigationController3 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"aboutMeViewController"]];
+    navigationController3.title = @"About Me";
+    navigationController3.navigationBar.topItem.title = @"About Me";
 
 #warning needs to be changed later, current just placeholder
-    UINavigationController *navigationController2 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"viewControllerTest2"]];
-    navigationController2.title = @"Test 2";
-    navigationController2.navigationBar.topItem.title = @"Test 2";
+    UINavigationController *navigationController2 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"mapViewController"]];
+    navigationController2.title = @"Map";
+    navigationController2.navigationBar.topItem.title = @"Map";
     
-    UINavigationController *navigationController3 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"]];
-    navigationController3.title = @"Home";
-    navigationController3.navigationBar.topItem.title = @"Home";
+    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"]];
+    navigationController1.title = @"Home";
+    navigationController1.navigationBar.topItem.title = @"Home";
     
     NSArray *controllers = [NSArray arrayWithObjects:navigationController1,navigationController2,navigationController3, nil];
     self.tabBarController.viewControllers = controllers;
