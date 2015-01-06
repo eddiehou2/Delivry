@@ -10,6 +10,7 @@
 		2C0C0B2B1A54BF0A004A0C6C /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C0C0B2A1A54BF0A004A0C6C /* GoogleMaps.framework */; };
 		2C0C0B2D1A54BF21004A0C6C /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2C0C0B2C1A54BF21004A0C6C /* GoogleMaps.bundle */; };
 		2C0C0B301A5661AE004A0C6C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C0B2F1A5661AE004A0C6C /* MapViewController.m */; };
+		2C68F4F91A588B18005A00FB /* DEGeocodingServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C68F4F81A588B18005A00FB /* DEGeocodingServices.m */; };
 		6E0D2FBA1A534D1000F1D271 /* PFUser+CurrentInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0D2FB91A534D1000F1D271 /* PFUser+CurrentInformation.m */; };
 		6E0D2FC01A53771800F1D271 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E0D2FBF1A53771800F1D271 /* AVFoundation.framework */; };
 		6E0D2FC21A53772200F1D271 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E0D2FC11A53772200F1D271 /* CoreData.framework */; };
@@ -68,6 +69,8 @@
 		2C0C0B2C1A54BF21004A0C6C /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		2C0C0B2E1A5661AE004A0C6C /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		2C0C0B2F1A5661AE004A0C6C /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		2C0C0B381A5883B5004A0C6C /* DEGeocodingServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEGeocodingServices.h; sourceTree = "<group>"; };
+		2C68F4F81A588B18005A00FB /* DEGeocodingServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEGeocodingServices.m; sourceTree = "<group>"; };
 		6E0D2FB81A534D1000F1D271 /* PFUser+CurrentInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFUser+CurrentInformation.h"; sourceTree = "<group>"; };
 		6E0D2FB91A534D1000F1D271 /* PFUser+CurrentInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFUser+CurrentInformation.m"; sourceTree = "<group>"; };
 		6E0D2FBF1A53771800F1D271 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -255,6 +258,8 @@
 				6E0D2FB91A534D1000F1D271 /* PFUser+CurrentInformation.m */,
 				2C0C0B2E1A5661AE004A0C6C /* MapViewController.h */,
 				2C0C0B2F1A5661AE004A0C6C /* MapViewController.m */,
+				2C0C0B381A5883B5004A0C6C /* DEGeocodingServices.h */,
+				2C68F4F81A588B18005A00FB /* DEGeocodingServices.m */,
 			);
 			path = Delivry;
 			sourceTree = "<group>";
@@ -401,6 +406,7 @@
 				6EC567761A29267E00F51EFF /* SignUpViewController.m in Sources */,
 				6EC567801A2A630500F51EFF /* CreateRestaurantViewController.m in Sources */,
 				6EE81FC31A2425CE002E93C7 /* main.m in Sources */,
+				2C68F4F91A588B18005A00FB /* DEGeocodingServices.m in Sources */,
 				2C0C0B301A5661AE004A0C6C /* MapViewController.m in Sources */,
 				6EC567791A29648300F51EFF /* HomeViewController.m in Sources */,
 				6E1B31641A51F34F002A7C8C /* AboutMeViewController.m in Sources */,

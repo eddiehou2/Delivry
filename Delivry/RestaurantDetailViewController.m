@@ -26,13 +26,20 @@
     PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:self.currentLocation];
     self.distanceLabel.text = [NSString stringWithFormat:@"%.2f km",[point distanceInKilometersTo:[self.restaurant objectForKey:@"restaurantLocation"]]];
     
-    NSInteger noItems = rand() % 20 + 30;
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"RestaurantItems"];
+    [query whereKey:@"restaurant" equalTo:self.restaurant];
+    self.restaurantItems = [[query findObjects] mutableCopy];
+    self.quantity = [[NSMutableArray alloc] init];
+    
+    NSInteger noItems = self.restaurantItems.count;
     
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.image.bounds.size.height + self.navigationController.navigationBar.frame.size.height + 10, self.view.bounds.size.width, self.view.bounds.size.height-(self.image.bounds.size.height + self.navigationController.navigationBar.frame.size.height + self.tabBarController.tabBar.frame.size.height + 10))];
     [scrollView setContentSize:CGSizeMake(scrollView.bounds.size.width, noItems*25 + 40)];
     for (int i = 0; i < noItems; i++) {
+        PFObject *restaurantItem = self.restaurantItems[i];
         UILabel *item = [[UILabel alloc] initWithFrame:CGRectMake(10, i*25, (3/4.0)*(scrollView.bounds.size.width - 10), 21)];
-        item.text = [NSString stringWithFormat:@"Item %i",i];
+        item.text = [NSString stringWithFormat:@"%@",[restaurantItem objectForKey:@"itemName"]];
         item.tag=4 * i;
         [scrollView addSubview:item];
         
@@ -40,6 +47,7 @@
         quantity.text = @"0";
         quantity.tag=4 * i + 1;
         [scrollView addSubview:quantity];
+        [self.quantity addObject:quantity];
         
         UIButton *add = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         add.frame = CGRectMake((3/4.0)*(scrollView.bounds.size.width - 10)+10, i*25, 21, 21);
@@ -64,7 +72,7 @@
     
     [self.view addSubview:scrollView];
     
-    
+    [submit addTarget:self action:@selector(submitOrder:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -89,6 +97,71 @@
     if ([label.text intValue] < 1) {
         minus.enabled = NO;
     }
+}
+
+
+-(void) submitOrder:(id) sender {
+    [self createBundle];
+}
+
+-(void) createBundle {
+    // Create a bundle for the order
+    PFObject *bundleObject = [PFObject objectWithClassName:@"Bundles"];
+    [bundleObject setObject:self.restaurant forKey:@"restaurant"];
+    [bundleObject setObject:[NSDate date] forKey:@"delivryBy"];
+    [bundleObject setObject:[PFGeoPoint geoPointWithLocation:self.currentLocation] forKey:@"delivryTo"];
+    [bundleObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            [self createTransaction:bundleObject];
+            NSLog(@"Info (Parse): Bundle Object has been successfully created.");
+        }
+        else {
+            NSLog(@"Error (Parse): %@",error);
+        }
+    }];
+    NSLog(@"Created Bundle");
+}
+
+-(void) createTransaction:(PFObject *)bundleObject {
+    PFObject *transactionObject = [PFObject objectWithClassName:@"Transactions"];
+    [transactionObject setObject:bundleObject forKey:@"bundle"];
+    [transactionObject setObject:[PFUser currentUser] forKey:@"user"];
+    [transactionObject setObject:[PFGeoPoint geoPointWithLocation:self.currentLocation] forKey:@"delivryLocation"];
+    [transactionObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            [self createOrder:transactionObject];
+            NSLog(@"Info (Parse): Transaction Object has been successfully created.");
+        }
+        else {
+            NSLog(@"Error (Parse): %@",error);
+        }
+    }];
+    NSLog(@"Created Transaction");
+}
+
+-(void) createOrder:(PFObject *)transactionObject {
+    NSMutableArray *orderItems = [[NSMutableArray alloc] init];
+    // Create a list of OrderItems
+    for (int i = 0; i < self.restaurantItems.count; i++) {
+        UILabel *quantity = self.quantity[i];
+        PFObject *restaurantItem = self.restaurantItems[i];
+        if (![quantity.text isEqual: @"0"]) {
+            PFObject *orderItem = [PFObject objectWithClassName:@"OrderItems"];
+            [orderItem setObject:transactionObject forKey:@"transaction"];
+            [orderItem setObject:restaurantItem forKey:@"orderedItem"];
+            [orderItem setObject:[[[NSNumberFormatter alloc] init] numberFromString:quantity.text] forKey:@"quantity"];
+            [orderItems addObject:orderItem];
+        }
+    }
+    [PFObject saveAllInBackground:orderItems block:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"Info (Parse): Order Items have been successfully saved.");
+        }
+        else {
+            NSLog(@"Error (Parse): %@",error);
+        }
+    }];
+    NSLog(@"Parse: Successfully Pushed Order!");
 }
 
 /*

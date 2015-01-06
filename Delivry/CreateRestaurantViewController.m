@@ -8,6 +8,7 @@
 
 #import "CreateRestaurantViewController.h"
 #import "HomeViewController.h"
+#import "DEGeocodingServices.h"
 
 @interface CreateRestaurantViewController ()
 
@@ -21,6 +22,8 @@
     CLLocationCoordinate2D restaurantCood = [self.restaurantLocation coordinate];
     self.latitudeLabel.text = [NSString stringWithFormat: @"%f",restaurantCood.latitude];
     self.longitudeLabel.text = [NSString stringWithFormat: @"%f",restaurantCood.longitude];
+    
+    [self.locationOrAddressSwitch addTarget:self action:@selector(setState:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,6 +49,12 @@
         [self alertMessage:@"Restaurant must have a description! Please try again." title:@"Error"];
     }
     else {
+        if (self.locationOrAddressSwitch.isOn) {
+            DEGeocodingServices *geocoder = [[DEGeocodingServices alloc] init];
+            [geocoder geocodeAddress:self.restaurantAddress.text];
+            self.restaurantLocation = [[CLLocation alloc] initWithLatitude:[[geocoder.geocode objectForKey:@"lat"] floatValue] longitude:[[geocoder.geocode objectForKey:@"lng"] floatValue]];
+        }
+        
         PFGeoPoint *restaurantPoint = [PFGeoPoint geoPointWithLocation:self.restaurantLocation];
         NSLog(@"name: %@ // description: %@ // location: %@",self.restaurantName.text,self.restaurantDescription.text,restaurantPoint);
         PFObject *newRestaurant = [PFObject objectWithClassName:@"Restaurants"];
@@ -82,6 +91,20 @@
     [alertController addAction:ok];
     
     //[self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)setState:(id) sender {
+    BOOL state = [sender isOn];
+    if (state) {
+        self.longitudeLabel.textColor = [UIColor grayColor];
+        self.latitudeLabel.textColor = [UIColor grayColor];
+        self.restaurantAddress.enabled = YES;
+    }
+    else {
+        self.latitudeLabel.textColor = [UIColor blackColor];
+        self.longitudeLabel.textColor = [UIColor blackColor];
+        self.restaurantAddress.enabled = NO;
+    }
 }
 
         

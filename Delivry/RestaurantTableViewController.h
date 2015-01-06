@@ -11,7 +11,7 @@
 
 @interface RestaurantTableViewController : UITableViewController
 
-@property(nonatomic, weak) NSArray *restaurants;
+@property(nonatomic, strong) NSArray *restaurants;
 @property(nonatomic, strong) CLLocation *currentLocation;
 
 @end

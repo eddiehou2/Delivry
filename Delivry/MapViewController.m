@@ -7,6 +7,7 @@
 //
 
 #import "MapViewController.h"
+#import "DEGeocodingServices.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <Parse/Parse.h>
 
@@ -66,6 +67,17 @@
     marker.map = mapView;
     
     NSLog(@"Finish Loading Map");
+    
+    DEGeocodingServices *geocoder = [[DEGeocodingServices alloc] init];
+    [geocoder geocodeAddress:@"770 Bay St., Toronto, ON"];
+    GMSMarker *marker2 = [[GMSMarker alloc] init];
+    marker2.position = CLLocationCoordinate2DMake([[geocoder.geocode objectForKey:@"lat"] floatValue], [[geocoder.geocode objectForKey:@"lng"] floatValue]);
+    marker2.title = @"Amy's Home";
+    marker2.snippet = @"Lumiere";
+    marker2.icon = [GMSMarker markerImageWithColor:[UIColor whiteColor]];
+    marker2.map = mapView;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

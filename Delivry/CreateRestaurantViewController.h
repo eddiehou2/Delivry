@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *restaurantDescription;
 @property (weak, nonatomic) IBOutlet UILabel *latitudeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *longitudeLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *locationOrAddressSwitch;
+@property (weak, nonatomic) IBOutlet UITextField *restaurantAddress;
 
 
 - (IBAction)createRestaurant:(id)sender;

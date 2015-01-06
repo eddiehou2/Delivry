@@ -12,7 +12,7 @@
 
 @interface RestaurantDetailViewController : UIViewController
 
-@property(nonatomic, strong) NSMutableDictionary *restaurant;
+@property(nonatomic, strong) PFObject *restaurant;
 @property(nonatomic, strong) CLLocation *currentLocation;
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -20,6 +20,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *minimumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
+
+@property (nonatomic, strong) NSMutableArray *restaurantItems;
+@property (nonatomic, strong) NSMutableArray *quantity;
 
 
 @end
