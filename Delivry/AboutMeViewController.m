@@ -18,7 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [PFUser logOut];
     self.user = [PFUser currentUser];
     NSLog(@"%@",self.user);
     if (self.user == nil) {
@@ -29,13 +28,12 @@
     }
     // Do any additional setup after loading the view.
     
-    [self addObserver:self forKeyPath:@"self.user.name" options:NSKeyValueObservingOptionNew context:NULL];
-    
-    UITapGestureRecognizer *touch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkingItOut)];
-    touch.numberOfTapsRequired = 2;
-    touch.numberOfTouchesRequired = 1;
-    [self.view addGestureRecognizer:touch];
-    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editPersonalInformation)];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self loggedInWith:[PFUser getInformationFromCurrentUser]];
+    [self refreshUIWithUserInformation];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,22 +41,26 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)notificationButton:(id)sender {
+}
+
+- (IBAction)messageButton:(id)sender {
+}
+
 - (void)loggedInWith:(PFUser *) user {
     self.user = [PFUser getInformationFromCurrentUser];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"self.user.name"]) {
-        self.name.text = self.user.name;
-    }
+- (void)refreshUIWithUserInformation {
+    self.nameLabel.text = self.user.name;
+    self.titleLabel.text = self.user.title;
+    self.addressLabel.text = self.user.homeAddress;
+    NSLog(@"Appearing!!!");
 }
 
-- (void)checkingItOut {
-    NSLog(@"33%@",self.user);
-    NSLog(@"44%@",self.user.name);
-    self.name.text = self.user.name;
+- (void)editPersonalInformation {
+    
 }
-
 /*
 #pragma mark - Navigation
 

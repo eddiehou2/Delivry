@@ -14,9 +14,10 @@
 @property(nonatomic, weak) NSString *title;
 @property(nonatomic, weak) NSString *number;
 @property(nonatomic, weak) UIImage *image;
-@property(nonatomic, weak) NSArray *friends;
+@property(nonatomic, weak) NSMutableArray *friends;
 @property(nonatomic, weak) NSString *payment;
-@property(nonatomic, weak) NSArray *address;
+@property(nonatomic, weak) NSString *homeAddress;
+@property(nonatomic, weak) PFGeoPoint *homeLocation;
 
 +(PFUser *) getInformationFromCurrentUser;
 

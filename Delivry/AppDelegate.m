@@ -8,10 +8,16 @@
 
 #import "AppDelegate.h"
 #import "HomeViewController.h"
+#import "Stripe.h"
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 #import <GoogleMaps/GoogleMaps.h>
+
+NSString * const StripePulishableKey = @"pk_test_iUwDnl65TdaFBlYpfAnQfPzP";
+NSString * const ParseApplicationID = @"hBa1XUtZDS7CVVvq03VVPSqd1umCPPFrPNsangKi";
+NSString * const ParseClientKey = @"hACU5cMTXFb8DNDVfnDi9hsmJYHnPj5kfZXat5iN";
+NSString * const GoogleMapAPIKey = @"AIzaSyCzdXSESxSJATrkF3y_WmdcIos_seuIoHY";
 
 @interface AppDelegate () 
 
@@ -22,22 +28,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [Parse setApplicationId:@"hBa1XUtZDS7CVVvq03VVPSqd1umCPPFrPNsangKi"
-                  clientKey:@"hACU5cMTXFb8DNDVfnDi9hsmJYHnPj5kfZXat5iN"];
+    [Parse setApplicationId:ParseApplicationID
+                  clientKey:ParseClientKey];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     [PFFacebookUtils initializeFacebook];
     
-    [GMSServices provideAPIKey:@"AIzaSyCzdXSESxSJATrkF3y_WmdcIos_seuIoHY"];
+    [GMSServices provideAPIKey:GoogleMapAPIKey];
+    [Stripe setDefaultPublishableKey:StripePulishableKey];
     
-#warning needs to be changed later, current just placeholder
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.tabBarController = [[UITabBarController alloc] init];
     UINavigationController *navigationController3 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"aboutMeViewController"]];
     navigationController3.title = @"About Me";
     navigationController3.navigationBar.topItem.title = @"About Me";
 
-#warning needs to be changed later, current just placeholder
     UINavigationController *navigationController2 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"mapViewController"]];
     navigationController2.title = @"Map";
     navigationController2.navigationBar.topItem.title = @"Map";

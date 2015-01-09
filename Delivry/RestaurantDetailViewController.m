@@ -7,6 +7,8 @@
 //
 
 #import "RestaurantDetailViewController.h"
+#import "MainViewController.h"
+#import "Stripe.h"
 #import <Parse/Parse.h>
 
 @interface RestaurantDetailViewController ()
@@ -101,7 +103,26 @@
 
 
 -(void) submitOrder:(id) sender {
-    [self createBundle];
+    if ([PFUser currentUser] != nil) {
+        [self createBundle];
+    }
+    else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No User" message:@"An user must be logged on to use the Delivry feature of the app. Please login and try again." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *login = [UIAlertAction actionWithTitle:@"Log In" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            MainViewController *mainViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"mainViewController"];
+            [self presentViewController:mainViewController animated:YES completion:nil];
+        }];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+        
+        [alert addAction:login];
+        [alert addAction:cancel];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    
 }
 
 -(void) createBundle {
@@ -111,6 +132,7 @@
     [bundleObject setObject:[NSDate date] forKey:@"delivryBy"];
     [bundleObject setObject:[PFGeoPoint geoPointWithLocation:self.currentLocation] forKey:@"delivryTo"];
     [bundleObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        NSLog(@"createdBundle? %@",succeeded ? @"Yes" : @"No");
         if (succeeded) {
             [self createTransaction:bundleObject];
             NSLog(@"Info (Parse): Bundle Object has been successfully created.");
@@ -119,7 +141,6 @@
             NSLog(@"Error (Parse): %@",error);
         }
     }];
-    NSLog(@"Created Bundle");
 }
 
 -(void) createTransaction:(PFObject *)bundleObject {
@@ -127,6 +148,8 @@
     [transactionObject setObject:bundleObject forKey:@"bundle"];
     [transactionObject setObject:[PFUser currentUser] forKey:@"user"];
     [transactionObject setObject:[PFGeoPoint geoPointWithLocation:self.currentLocation] forKey:@"delivryLocation"];
+    [transactionObject setObject:@"Address goes here" forKey:@"delivryAddress"];
+    [transactionObject setObject:[NSNumber numberWithBool:NO] forKey:@"charged"];
     [transactionObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             [self createOrder:transactionObject];
@@ -136,32 +159,61 @@
             NSLog(@"Error (Parse): %@",error);
         }
     }];
-    NSLog(@"Created Transaction");
 }
 
 -(void) createOrder:(PFObject *)transactionObject {
     NSMutableArray *orderItems = [[NSMutableArray alloc] init];
+    double totalPrice = 0.00;
     // Create a list of OrderItems
     for (int i = 0; i < self.restaurantItems.count; i++) {
-        UILabel *quantity = self.quantity[i];
+        UILabel *quantityLabel = self.quantity[i];
         PFObject *restaurantItem = self.restaurantItems[i];
-        if (![quantity.text isEqual: @"0"]) {
+        if (![quantityLabel.text isEqual: @"0"]) {
+            NSNumber *quantity = [[NSNumber alloc] initWithInt:[quantityLabel.text intValue]];
+            
             PFObject *orderItem = [PFObject objectWithClassName:@"OrderItems"];
             [orderItem setObject:transactionObject forKey:@"transaction"];
             [orderItem setObject:restaurantItem forKey:@"orderedItem"];
-            [orderItem setObject:[[[NSNumberFormatter alloc] init] numberFromString:quantity.text] forKey:@"quantity"];
+            [orderItem setObject:quantity forKey:@"quantity"];
             [orderItems addObject:orderItem];
+            
+            totalPrice += [quantity intValue] * [[restaurantItem objectForKey:@"itemPrice"] floatValue];
         }
     }
     [PFObject saveAllInBackground:orderItems block:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"Info (Parse): Order Items have been successfully saved.");
+            NSLog(@"Total Price: %f", totalPrice);
+            [self createPayment:transactionObject withAmount:totalPrice];
         }
         else {
             NSLog(@"Error (Parse): %@",error);
         }
     }];
-    NSLog(@"Parse: Successfully Pushed Order!");
+}
+
+-(void) createPayment:(PFObject *)transactionObject withAmount:(double) totalPrice {
+    STPCard *card = [[STPCard alloc] init];
+    card.number = @"4242424242424242";
+    card.expMonth = 5;
+    card.expYear = 2015;
+    card.cvc = @"969";
+    [Stripe createTokenWithCard:card completion:^(STPToken *token, NSError *error) {
+        if (!error) {
+            NSLog(@"Token: %@",token);
+            [PFCloud callFunctionInBackground:@"orderedItems" withParameters:@{@"totalPrice":[[NSNumber alloc] initWithDouble:(ceil(totalPrice*100)/100)],@"currency":@"cad",@"cardToken":[token tokenId],@"name":@"Name Goes Here Later",@"email":@"Email Goes Here Later",@"address":@"Address Goes Here Later",@"city_province":@"City Province Goes Here Later",@"zip":@"Zip Goes Here Later",@"transactionID":transactionObject.objectId} block:^(id object, NSError *error) {
+                if (!error) {
+                    NSLog(@"Info (Stripe): A charge of %.2f has been successfully charged.",totalPrice);
+                }
+                else {
+                    NSLog(@"Error (Stripe): %@",error);
+                }
+            }];
+        }
+        else {
+            NSLog(@"Error (Stripe): %@",error);
+        }
+    }];
 }
 
 /*

@@ -11,6 +11,15 @@
 
 @implementation PFUser (CurrentInformation)
 
+@dynamic friends;
+@dynamic title;
+@dynamic homeAddress;
+@dynamic homeLocation;
+@dynamic number;
+@dynamic image;
+@dynamic payment;
+@dynamic name;
+
 +(PFUser *) getInformationFromCurrentUser {
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser != nil) {
@@ -40,8 +49,11 @@
                 if (!error) {
                     NSDictionary *results = objects[0];
                     user.name = results[@"name"];
+                    user.title = results[@"title"];
+                    user.homeAddress = results[@"homeAddress"];
                     user.email = results[@"email"];
                     user.number = results[@"number"];
+                    user.homeLocation = results[@"homeLocation"];
                 }
                 else {
                     NSLog(@"Error: DEUser/getInformationFromCurrentUser/findObjectsInBackgroundWithBlock");

@@ -10,7 +10,7 @@
 #import "HomeViewController.h"
 #import "MainViewController.h"
 
-@interface LogInViewController ()
+@interface LogInViewController () <UITextFieldDelegate>
 
 @end
 
@@ -95,6 +95,12 @@
     [alertController addAction:ok];
     
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 
 @end

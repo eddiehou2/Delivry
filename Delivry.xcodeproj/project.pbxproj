@@ -10,6 +10,16 @@
 		2C0C0B2B1A54BF0A004A0C6C /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C0C0B2A1A54BF0A004A0C6C /* GoogleMaps.framework */; };
 		2C0C0B2D1A54BF21004A0C6C /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2C0C0B2C1A54BF21004A0C6C /* GoogleMaps.bundle */; };
 		2C0C0B301A5661AE004A0C6C /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0C0B2F1A5661AE004A0C6C /* MapViewController.m */; };
+		2C2BC67B1A5C62C9001905F4 /* STPAPIClient+ApplePay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2BC66A1A5C62C9001905F4 /* STPAPIClient+ApplePay.m */; };
+		2C2BC67C1A5C62C9001905F4 /* Stripe+ApplePay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2BC66C1A5C62C9001905F4 /* Stripe+ApplePay.m */; };
+		2C2BC67D1A5C62C9001905F4 /* STPAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2BC66E1A5C62C9001905F4 /* STPAPIClient.m */; };
+		2C2BC67E1A5C62C9001905F4 /* STPBankAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2BC6701A5C62C9001905F4 /* STPBankAccount.m */; };
+		2C2BC67F1A5C62C9001905F4 /* STPCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2BC6721A5C62C9001905F4 /* STPCard.m */; };
+		2C2BC6801A5C62C9001905F4 /* STPToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2BC6741A5C62C9001905F4 /* STPToken.m */; };
+		2C2BC6811A5C62C9001905F4 /* Stripe.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2BC6761A5C62C9001905F4 /* Stripe.m */; };
+		2C2BC6821A5C62C9001905F4 /* StripeError.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2BC6781A5C62C9001905F4 /* StripeError.m */; };
+		2C2BC6841A5C6302001905F4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2BC6831A5C6302001905F4 /* Foundation.framework */; };
+		2C2BC6861A5C6311001905F4 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2BC6851A5C6311001905F4 /* PassKit.framework */; };
 		2C68F4F91A588B18005A00FB /* DEGeocodingServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C68F4F81A588B18005A00FB /* DEGeocodingServices.m */; };
 		6E0D2FBA1A534D1000F1D271 /* PFUser+CurrentInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0D2FB91A534D1000F1D271 /* PFUser+CurrentInformation.m */; };
 		6E0D2FC01A53771800F1D271 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E0D2FBF1A53771800F1D271 /* AVFoundation.framework */; };
@@ -70,6 +80,25 @@
 		2C0C0B2E1A5661AE004A0C6C /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		2C0C0B2F1A5661AE004A0C6C /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		2C0C0B381A5883B5004A0C6C /* DEGeocodingServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEGeocodingServices.h; sourceTree = "<group>"; };
+		2C2BC6691A5C62C9001905F4 /* STPAPIClient+ApplePay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "STPAPIClient+ApplePay.h"; sourceTree = "<group>"; };
+		2C2BC66A1A5C62C9001905F4 /* STPAPIClient+ApplePay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "STPAPIClient+ApplePay.m"; sourceTree = "<group>"; };
+		2C2BC66B1A5C62C9001905F4 /* Stripe+ApplePay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Stripe+ApplePay.h"; sourceTree = "<group>"; };
+		2C2BC66C1A5C62C9001905F4 /* Stripe+ApplePay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Stripe+ApplePay.m"; sourceTree = "<group>"; };
+		2C2BC66D1A5C62C9001905F4 /* STPAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPAPIClient.h; sourceTree = "<group>"; };
+		2C2BC66E1A5C62C9001905F4 /* STPAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPAPIClient.m; sourceTree = "<group>"; };
+		2C2BC66F1A5C62C9001905F4 /* STPBankAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPBankAccount.h; sourceTree = "<group>"; };
+		2C2BC6701A5C62C9001905F4 /* STPBankAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPBankAccount.m; sourceTree = "<group>"; };
+		2C2BC6711A5C62C9001905F4 /* STPCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPCard.h; sourceTree = "<group>"; };
+		2C2BC6721A5C62C9001905F4 /* STPCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPCard.m; sourceTree = "<group>"; };
+		2C2BC6731A5C62C9001905F4 /* STPToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPToken.h; sourceTree = "<group>"; };
+		2C2BC6741A5C62C9001905F4 /* STPToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPToken.m; sourceTree = "<group>"; };
+		2C2BC6751A5C62C9001905F4 /* Stripe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stripe.h; sourceTree = "<group>"; };
+		2C2BC6761A5C62C9001905F4 /* Stripe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stripe.m; sourceTree = "<group>"; };
+		2C2BC6771A5C62C9001905F4 /* StripeError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StripeError.h; sourceTree = "<group>"; };
+		2C2BC6781A5C62C9001905F4 /* StripeError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StripeError.m; sourceTree = "<group>"; };
+		2C2BC67A1A5C62C9001905F4 /* Stripe-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Stripe-Prefix.pch"; sourceTree = "<group>"; };
+		2C2BC6831A5C6302001905F4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2C2BC6851A5C6311001905F4 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		2C68F4F81A588B18005A00FB /* DEGeocodingServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEGeocodingServices.m; sourceTree = "<group>"; };
 		6E0D2FB81A534D1000F1D271 /* PFUser+CurrentInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFUser+CurrentInformation.h"; sourceTree = "<group>"; };
 		6E0D2FB91A534D1000F1D271 /* PFUser+CurrentInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFUser+CurrentInformation.m"; sourceTree = "<group>"; };
@@ -136,6 +165,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C2BC6861A5C6311001905F4 /* PassKit.framework in Frameworks */,
+				6EC567651A29176C00F51EFF /* Security.framework in Frameworks */,
+				2C2BC6841A5C6302001905F4 /* Foundation.framework in Frameworks */,
 				6EC567691A29178200F51EFF /* SystemConfiguration.framework in Frameworks */,
 				6EC567631A29176400F51EFF /* QuartzCore.framework in Frameworks */,
 				6E0D2FCE1A53777800F1D271 /* OpenGLES.framework in Frameworks */,
@@ -150,7 +182,6 @@
 				6E0D2FC21A53772200F1D271 /* CoreData.framework in Frameworks */,
 				6E0D2FC01A53771800F1D271 /* AVFoundation.framework in Frameworks */,
 				6EC567671A29177500F51EFF /* StoreKit.framework in Frameworks */,
-				6EC567651A29176C00F51EFF /* Security.framework in Frameworks */,
 				6EC567611A29175A00F51EFF /* MobileCoreServices.framework in Frameworks */,
 				6EC5675B1A29173900F51EFF /* CoreGraphics.framework in Frameworks */,
 				6EC567591A29172F00F51EFF /* CFNetwork.framework in Frameworks */,
@@ -172,9 +203,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C2BC6671A5C62C9001905F4 /* Stripe */ = {
+			isa = PBXGroup;
+			children = (
+				2C2BC6681A5C62C9001905F4 /* ApplePay */,
+				2C2BC66D1A5C62C9001905F4 /* STPAPIClient.h */,
+				2C2BC66E1A5C62C9001905F4 /* STPAPIClient.m */,
+				2C2BC66F1A5C62C9001905F4 /* STPBankAccount.h */,
+				2C2BC6701A5C62C9001905F4 /* STPBankAccount.m */,
+				2C2BC6711A5C62C9001905F4 /* STPCard.h */,
+				2C2BC6721A5C62C9001905F4 /* STPCard.m */,
+				2C2BC6731A5C62C9001905F4 /* STPToken.h */,
+				2C2BC6741A5C62C9001905F4 /* STPToken.m */,
+				2C2BC6751A5C62C9001905F4 /* Stripe.h */,
+				2C2BC6761A5C62C9001905F4 /* Stripe.m */,
+				2C2BC6771A5C62C9001905F4 /* StripeError.h */,
+				2C2BC6781A5C62C9001905F4 /* StripeError.m */,
+				2C2BC6791A5C62C9001905F4 /* Supporting Files */,
+			);
+			name = Stripe;
+			path = Delivry/Stripe;
+			sourceTree = "<group>";
+		};
+		2C2BC6681A5C62C9001905F4 /* ApplePay */ = {
+			isa = PBXGroup;
+			children = (
+				2C2BC6691A5C62C9001905F4 /* STPAPIClient+ApplePay.h */,
+				2C2BC66A1A5C62C9001905F4 /* STPAPIClient+ApplePay.m */,
+				2C2BC66B1A5C62C9001905F4 /* Stripe+ApplePay.h */,
+				2C2BC66C1A5C62C9001905F4 /* Stripe+ApplePay.m */,
+			);
+			path = ApplePay;
+			sourceTree = "<group>";
+		};
+		2C2BC6791A5C62C9001905F4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2C2BC67A1A5C62C9001905F4 /* Stripe-Prefix.pch */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		6EC5676A1A2917EF00F51EFF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2C2BC6851A5C6311001905F4 /* PassKit.framework */,
+				2C2BC6831A5C6302001905F4 /* Foundation.framework */,
 				2C0C0B2C1A54BF21004A0C6C /* GoogleMaps.bundle */,
 				2C0C0B2A1A54BF0A004A0C6C /* GoogleMaps.framework */,
 				6E0D2FCD1A53777800F1D271 /* OpenGLES.framework */,
@@ -207,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				6EE81FBF1A2425CE002E93C7 /* Delivry */,
+				2C2BC6671A5C62C9001905F4 /* Stripe */,
 				6EC5676A1A2917EF00F51EFF /* Frameworks */,
 				6EE81FD91A2425CE002E93C7 /* DelivryTests */,
 				6EE81FBE1A2425CE002E93C7 /* Products */,
@@ -394,22 +469,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C2BC67C1A5C62C9001905F4 /* Stripe+ApplePay.m in Sources */,
+				2C2BC6821A5C62C9001905F4 /* StripeError.m in Sources */,
 				7A8932EA1A4E6A050060AFC8 /* RestaurantTableViewCell.m in Sources */,
 				6EC5676D1A2919CA00F51EFF /* User.m in Sources */,
 				6EC567701A2919DE00F51EFF /* Restaurant.m in Sources */,
 				7AD9FA971A4B4F210021611D /* RestaurantTableViewController.m in Sources */,
+				2C2BC6801A5C62C9001905F4 /* STPToken.m in Sources */,
 				6E4F71951A4F808C004F47C0 /* RestaurantDetailViewController.m in Sources */,
+				2C2BC67D1A5C62C9001905F4 /* STPAPIClient.m in Sources */,
 				6EC567731A29266F00F51EFF /* LogInViewController.m in Sources */,
 				6EE81FC91A2425CE002E93C7 /* MainViewController.m in Sources */,
 				6EE81FC61A2425CE002E93C7 /* AppDelegate.m in Sources */,
+				2C2BC6811A5C62C9001905F4 /* Stripe.m in Sources */,
 				6E0D2FBA1A534D1000F1D271 /* PFUser+CurrentInformation.m in Sources */,
 				6EC567761A29267E00F51EFF /* SignUpViewController.m in Sources */,
+				2C2BC67F1A5C62C9001905F4 /* STPCard.m in Sources */,
 				6EC567801A2A630500F51EFF /* CreateRestaurantViewController.m in Sources */,
 				6EE81FC31A2425CE002E93C7 /* main.m in Sources */,
 				2C68F4F91A588B18005A00FB /* DEGeocodingServices.m in Sources */,
 				2C0C0B301A5661AE004A0C6C /* MapViewController.m in Sources */,
+				2C2BC67B1A5C62C9001905F4 /* STPAPIClient+ApplePay.m in Sources */,
 				6EC567791A29648300F51EFF /* HomeViewController.m in Sources */,
 				6E1B31641A51F34F002A7C8C /* AboutMeViewController.m in Sources */,
+				2C2BC67E1A5C62C9001905F4 /* STPBankAccount.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

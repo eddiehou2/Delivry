@@ -9,6 +9,7 @@
 #import "HomeViewController.h"
 #import "CreateRestaurantViewController.h"
 #import "RestaurantTableViewController.h"
+#import "Stripe.h"
 #import "DEGeocodingServices.h"
 #import <FacebookSDK/FacebookSDK.h>
 
@@ -27,14 +28,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     locationManager = [[CLLocationManager alloc] init];
-    [self updateLocation:nil];
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(displayRestaurantList)];
     tapRecognizer.numberOfTapsRequired = 2;
     tapRecognizer.numberOfTouchesRequired = 1;
     [self.nearbyRestaurantDisplay addGestureRecognizer:tapRecognizer];
     
-    [self parseScripts];
+    //[self parseScripts];
+    
+    [PFUser logOut];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self updateLocation:nil];
 }
 
 - (void)didReceiveMemoryWarning {

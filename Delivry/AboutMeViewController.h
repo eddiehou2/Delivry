@@ -13,8 +13,15 @@
 
 @property (nonatomic, weak) PFUser *user;
 
-@property (weak, nonatomic) IBOutlet UIImageView *image;
-@property (weak, nonatomic) IBOutlet UILabel *name;
+@property (weak, nonatomic) IBOutlet UIImageView *thrumbnailImage;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *paymentTypeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *paymentInfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+- (IBAction)notificationButton:(id)sender;
+- (IBAction)messageButton:(id)sender;
+
 
 
 

@@ -9,7 +9,7 @@
 #import "SignUpViewController.h"
 #import "LogInViewController.h"
 
-@interface SignUpViewController ()
+@interface SignUpViewController () <UITextFieldDelegate>
 
 @end
 
@@ -100,5 +100,11 @@
     [self.alertController addAction:ok];
     
     [self presentViewController:self.alertController animated:YES completion:nil];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 @end

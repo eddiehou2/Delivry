@@ -9,8 +9,9 @@
 #import "CreateRestaurantViewController.h"
 #import "HomeViewController.h"
 #import "DEGeocodingServices.h"
+#import <GoogleMaps/GoogleMaps.h>
 
-@interface CreateRestaurantViewController ()
+@interface CreateRestaurantViewController () <UITextFieldDelegate>
 
 @end
 
@@ -53,44 +54,38 @@
             DEGeocodingServices *geocoder = [[DEGeocodingServices alloc] init];
             [geocoder geocodeAddress:self.restaurantAddress.text];
             self.restaurantLocation = [[CLLocation alloc] initWithLatitude:[[geocoder.geocode objectForKey:@"lat"] floatValue] longitude:[[geocoder.geocode objectForKey:@"lng"] floatValue]];
+            [self saveRestaurant];
+        }
+        else {
+            [[GMSGeocoder geocoder] reverseGeocodeCoordinate:self.restaurantLocation.coordinate completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
+                if (!error) {
+                    GMSAddress *address = [[response results] objectAtIndex:0];
+                    self.restaurantAddress.text = [NSString stringWithFormat:@"%@, %@",[address thoroughfare],[address locality]];
+                    [self saveRestaurant];
+                }
+                else {
+                    NSLog(@"Error (GMS): %@",error);
+                }
+            }];
         }
         
-        PFGeoPoint *restaurantPoint = [PFGeoPoint geoPointWithLocation:self.restaurantLocation];
-        NSLog(@"name: %@ // description: %@ // location: %@",self.restaurantName.text,self.restaurantDescription.text,restaurantPoint);
-        PFObject *newRestaurant = [PFObject objectWithClassName:@"Restaurants"];
-        newRestaurant[@"restaurantName"] = self.restaurantName.text;
-        newRestaurant[@"restaurantDescription"] = self.restaurantDescription.text;
-        newRestaurant[@"restaurantLocation"] = restaurantPoint;
-        [newRestaurant saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (error) {
-                NSLog(@"createRestaurant failWithError: %@", error);
-            }
-            
-            if (succeeded) {
-                [self alertMessage:@"Successfully created a restaurant!" title:@"Successful:"];
-            }
-            else {
-                [self alertMessage:@"An error occurred in the process of creating a restaurant. Please try again." title:@"Error:"];
-            }
-        }];
     }
 }
 
 - (IBAction)cancelled:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
         
 - (void) alertMessage:(NSString *)message title:(NSString *)title {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [alertController dismissViewControllerAnimated:YES completion:nil];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController popViewControllerAnimated:YES];
     }];
     
     [alertController addAction:ok];
     
-    //[self presentViewController:alertController animated:YES completion:nil];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)setState:(id) sender {
@@ -107,5 +102,31 @@
     }
 }
 
-        
+- (void)saveRestaurant {
+    PFGeoPoint *restaurantPoint = [PFGeoPoint geoPointWithLocation:self.restaurantLocation];
+    NSLog(@"name: %@ // description: %@ // location: %@",self.restaurantName.text,self.restaurantDescription.text,restaurantPoint);
+    PFObject *newRestaurant = [PFObject objectWithClassName:@"Restaurants"];
+    newRestaurant[@"restaurantName"] = self.restaurantName.text;
+    newRestaurant[@"restaurantDescription"] = self.restaurantDescription.text;
+    newRestaurant[@"restaurantLocation"] = restaurantPoint;
+    newRestaurant[@"restaurantAddress"] = self.restaurantAddress.text;
+    newRestaurant[@"restaurantPrice"] = @1;
+    newRestaurant[@"restaurantMinimum"] = @20;
+    [newRestaurant saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            [self alertMessage:@"Successfully created a restaurant!" title:@"Successful:"];
+        }
+        else {
+            [self alertMessage:@"An error occurred in the process of creating a restaurant. Please try again." title:@"Error:"];
+        }
+    }];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+
 @end
