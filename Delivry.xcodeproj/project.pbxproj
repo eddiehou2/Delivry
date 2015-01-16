@@ -21,6 +21,14 @@
 		2C2BC6841A5C6302001905F4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2BC6831A5C6302001905F4 /* Foundation.framework */; };
 		2C2BC6861A5C6311001905F4 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2BC6851A5C6311001905F4 /* PassKit.framework */; };
 		2C68F4F91A588B18005A00FB /* DEGeocodingServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C68F4F81A588B18005A00FB /* DEGeocodingServices.m */; };
+		2CECABA91A60F270007D8FEB /* AddPaymentCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CECABA81A60F270007D8FEB /* AddPaymentCardViewController.m */; };
+		2CECABAC1A6210D0007D8FEB /* FilterRestaurantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CECABAB1A6210D0007D8FEB /* FilterRestaurantViewController.m */; };
+		2CECABB81A6357AC007D8FEB /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CECABB71A6357AC007D8FEB /* AccountViewController.m */; };
+		2CECABBB1A642BD2007D8FEB /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CECABBA1A642BD2007D8FEB /* PaymentViewController.m */; };
+		2CECABBE1A642C76007D8FEB /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CECABBD1A642C76007D8FEB /* AddressViewController.m */; };
+		2CECABC11A642C83007D8FEB /* OrderHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CECABC01A642C83007D8FEB /* OrderHistoryViewController.m */; };
+		2CECABC41A64D7A3007D8FEB /* AddAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CECABC31A64D7A3007D8FEB /* AddAddressViewController.m */; };
+		2CECABCD1A65E09D007D8FEB /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CECABCC1A65E09D007D8FEB /* CartViewController.m */; };
 		6E0D2FBA1A534D1000F1D271 /* PFUser+CurrentInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0D2FB91A534D1000F1D271 /* PFUser+CurrentInformation.m */; };
 		6E0D2FC01A53771800F1D271 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E0D2FBF1A53771800F1D271 /* AVFoundation.framework */; };
 		6E0D2FC21A53772200F1D271 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E0D2FC11A53772200F1D271 /* CoreData.framework */; };
@@ -55,7 +63,7 @@
 		6EE81FC61A2425CE002E93C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81FC51A2425CE002E93C7 /* AppDelegate.m */; };
 		6EE81FC91A2425CE002E93C7 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81FC81A2425CE002E93C7 /* MainViewController.m */; };
 		6EE81FCC1A2425CE002E93C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE81FCA1A2425CE002E93C7 /* Main.storyboard */; };
-		6EE81FCE1A2425CE002E93C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EE81FCD1A2425CE002E93C7 /* Images.xcassets */; };
+		6EE81FCE1A2425CE002E93C7 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EE81FCD1A2425CE002E93C7 /* Image.xcassets */; };
 		6EE81FD11A2425CE002E93C7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EE81FCF1A2425CE002E93C7 /* LaunchScreen.xib */; };
 		6EE81FDD1A2425CE002E93C7 /* DelivryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE81FDC1A2425CE002E93C7 /* DelivryTests.m */; };
 		7A8932EA1A4E6A050060AFC8 /* RestaurantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8932E81A4E6A050060AFC8 /* RestaurantTableViewCell.m */; };
@@ -100,6 +108,22 @@
 		2C2BC6831A5C6302001905F4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2C2BC6851A5C6311001905F4 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		2C68F4F81A588B18005A00FB /* DEGeocodingServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEGeocodingServices.m; sourceTree = "<group>"; };
+		2CECABA71A60F270007D8FEB /* AddPaymentCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPaymentCardViewController.h; sourceTree = "<group>"; };
+		2CECABA81A60F270007D8FEB /* AddPaymentCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPaymentCardViewController.m; sourceTree = "<group>"; };
+		2CECABAA1A6210D0007D8FEB /* FilterRestaurantViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterRestaurantViewController.h; sourceTree = "<group>"; };
+		2CECABAB1A6210D0007D8FEB /* FilterRestaurantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterRestaurantViewController.m; sourceTree = "<group>"; };
+		2CECABB61A6357AC007D8FEB /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
+		2CECABB71A6357AC007D8FEB /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		2CECABB91A642BD2007D8FEB /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
+		2CECABBA1A642BD2007D8FEB /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
+		2CECABBC1A642C76007D8FEB /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
+		2CECABBD1A642C76007D8FEB /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
+		2CECABBF1A642C83007D8FEB /* OrderHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderHistoryViewController.h; sourceTree = "<group>"; };
+		2CECABC01A642C83007D8FEB /* OrderHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderHistoryViewController.m; sourceTree = "<group>"; };
+		2CECABC21A64D7A3007D8FEB /* AddAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAddressViewController.h; sourceTree = "<group>"; };
+		2CECABC31A64D7A3007D8FEB /* AddAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAddressViewController.m; sourceTree = "<group>"; };
+		2CECABCB1A65E09D007D8FEB /* CartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
+		2CECABCC1A65E09D007D8FEB /* CartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
 		6E0D2FB81A534D1000F1D271 /* PFUser+CurrentInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFUser+CurrentInformation.h"; sourceTree = "<group>"; };
 		6E0D2FB91A534D1000F1D271 /* PFUser+CurrentInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFUser+CurrentInformation.m"; sourceTree = "<group>"; };
 		6E0D2FBF1A53771800F1D271 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -147,7 +171,7 @@
 		6EE81FC71A2425CE002E93C7 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		6EE81FC81A2425CE002E93C7 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		6EE81FCB1A2425CE002E93C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		6EE81FCD1A2425CE002E93C7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6EE81FCD1A2425CE002E93C7 /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
 		6EE81FD01A2425CE002E93C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		6EE81FD61A2425CE002E93C7 /* DelivryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DelivryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE81FDB1A2425CE002E93C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -313,7 +337,7 @@
 				6EC567721A29266F00F51EFF /* LogInViewController.m */,
 				6EC567741A29267E00F51EFF /* SignUpViewController.h */,
 				6EC567751A29267E00F51EFF /* SignUpViewController.m */,
-				6EE81FCD1A2425CE002E93C7 /* Images.xcassets */,
+				6EE81FCD1A2425CE002E93C7 /* Image.xcassets */,
 				6EE81FCF1A2425CE002E93C7 /* LaunchScreen.xib */,
 				6EE81FC01A2425CE002E93C7 /* Supporting Files */,
 				6EC5676B1A2919CA00F51EFF /* User.h */,
@@ -335,6 +359,22 @@
 				2C0C0B2F1A5661AE004A0C6C /* MapViewController.m */,
 				2C0C0B381A5883B5004A0C6C /* DEGeocodingServices.h */,
 				2C68F4F81A588B18005A00FB /* DEGeocodingServices.m */,
+				2CECABA71A60F270007D8FEB /* AddPaymentCardViewController.h */,
+				2CECABA81A60F270007D8FEB /* AddPaymentCardViewController.m */,
+				2CECABAA1A6210D0007D8FEB /* FilterRestaurantViewController.h */,
+				2CECABAB1A6210D0007D8FEB /* FilterRestaurantViewController.m */,
+				2CECABB61A6357AC007D8FEB /* AccountViewController.h */,
+				2CECABB71A6357AC007D8FEB /* AccountViewController.m */,
+				2CECABB91A642BD2007D8FEB /* PaymentViewController.h */,
+				2CECABBA1A642BD2007D8FEB /* PaymentViewController.m */,
+				2CECABBC1A642C76007D8FEB /* AddressViewController.h */,
+				2CECABBD1A642C76007D8FEB /* AddressViewController.m */,
+				2CECABBF1A642C83007D8FEB /* OrderHistoryViewController.h */,
+				2CECABC01A642C83007D8FEB /* OrderHistoryViewController.m */,
+				2CECABC21A64D7A3007D8FEB /* AddAddressViewController.h */,
+				2CECABC31A64D7A3007D8FEB /* AddAddressViewController.m */,
+				2CECABCB1A65E09D007D8FEB /* CartViewController.h */,
+				2CECABCC1A65E09D007D8FEB /* CartViewController.m */,
 			);
 			path = Delivry;
 			sourceTree = "<group>";
@@ -450,7 +490,7 @@
 				7A8932EB1A4E6A050060AFC8 /* RestaurantTableViewCell.xib in Resources */,
 				6EE81FCC1A2425CE002E93C7 /* Main.storyboard in Resources */,
 				6EE81FD11A2425CE002E93C7 /* LaunchScreen.xib in Resources */,
-				6EE81FCE1A2425CE002E93C7 /* Images.xcassets in Resources */,
+				6EE81FCE1A2425CE002E93C7 /* Image.xcassets in Resources */,
 				2C0C0B2D1A54BF21004A0C6C /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -473,6 +513,7 @@
 				2C2BC6821A5C62C9001905F4 /* StripeError.m in Sources */,
 				7A8932EA1A4E6A050060AFC8 /* RestaurantTableViewCell.m in Sources */,
 				6EC5676D1A2919CA00F51EFF /* User.m in Sources */,
+				2CECABCD1A65E09D007D8FEB /* CartViewController.m in Sources */,
 				6EC567701A2919DE00F51EFF /* Restaurant.m in Sources */,
 				7AD9FA971A4B4F210021611D /* RestaurantTableViewController.m in Sources */,
 				2C2BC6801A5C62C9001905F4 /* STPToken.m in Sources */,
@@ -481,16 +522,23 @@
 				6EC567731A29266F00F51EFF /* LogInViewController.m in Sources */,
 				6EE81FC91A2425CE002E93C7 /* MainViewController.m in Sources */,
 				6EE81FC61A2425CE002E93C7 /* AppDelegate.m in Sources */,
+				2CECABC11A642C83007D8FEB /* OrderHistoryViewController.m in Sources */,
 				2C2BC6811A5C62C9001905F4 /* Stripe.m in Sources */,
 				6E0D2FBA1A534D1000F1D271 /* PFUser+CurrentInformation.m in Sources */,
 				6EC567761A29267E00F51EFF /* SignUpViewController.m in Sources */,
+				2CECABA91A60F270007D8FEB /* AddPaymentCardViewController.m in Sources */,
 				2C2BC67F1A5C62C9001905F4 /* STPCard.m in Sources */,
 				6EC567801A2A630500F51EFF /* CreateRestaurantViewController.m in Sources */,
 				6EE81FC31A2425CE002E93C7 /* main.m in Sources */,
+				2CECABBB1A642BD2007D8FEB /* PaymentViewController.m in Sources */,
+				2CECABBE1A642C76007D8FEB /* AddressViewController.m in Sources */,
 				2C68F4F91A588B18005A00FB /* DEGeocodingServices.m in Sources */,
+				2CECABAC1A6210D0007D8FEB /* FilterRestaurantViewController.m in Sources */,
 				2C0C0B301A5661AE004A0C6C /* MapViewController.m in Sources */,
+				2CECABB81A6357AC007D8FEB /* AccountViewController.m in Sources */,
 				2C2BC67B1A5C62C9001905F4 /* STPAPIClient+ApplePay.m in Sources */,
 				6EC567791A29648300F51EFF /* HomeViewController.m in Sources */,
+				2CECABC41A64D7A3007D8FEB /* AddAddressViewController.m in Sources */,
 				6E1B31641A51F34F002A7C8C /* AboutMeViewController.m in Sources */,
 				2C2BC67E1A5C62C9001905F4 /* STPBankAccount.m in Sources */,
 			);

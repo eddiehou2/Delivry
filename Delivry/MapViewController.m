@@ -29,13 +29,19 @@
     NSString *currentLatitude = [defaults objectForKey:@"currentLatitude"];
     
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:[currentLatitude floatValue] longitude:[currentLongitude floatValue] zoom:14];
-    mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
+    mapView = [GMSMapView mapWithFrame:CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height) camera:camera];
     mapView.myLocationEnabled = YES;
     mapView.delegate = self;
-    self.view = mapView;
+    [self.view addSubview:mapView];
+    
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height+20, self.navigationController.navigationBar.frame.size.width, 44)];
+    self.searchBar.showsCancelButton = YES;
+    self.searchBar.searchBarStyle = UISearchBarStyleDefault;
+    self.searchBar.delegate = self;
+    [self.view addSubview:self.searchBar];
     
     
-    UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithTitle:@"Refresh" style:UIBarButtonItemStylePlain target:self action:@selector(refreshMapView:)];
+    UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithTitle:@"Refresh" style:UIBarButtonItemStylePlain target:self action:@selector(refreshRetrievedData:)];
     self.navigationItem.rightBarButtonItem = refresh;
     
     UIBarButtonItem *options = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(displayOptions:)];
@@ -81,6 +87,7 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             [self refreshMapView:objects];
+            NSLog(@"refreshMapView with Objects");
         }
         else {
             NSLog(@"Error (Parse): %@",error);
@@ -90,6 +97,7 @@
 
 - (void)refreshMapView:(NSArray *)objects {
     NSArray *colorArray = @[[UIColor greenColor],[UIColor yellowColor],[UIColor orangeColor],[UIColor redColor],[UIColor blackColor],[UIColor purpleColor]];
+    [mapView clear];
     
     for (PFObject *restaurant in objects) {
         GMSMarker *marker = [[GMSMarker alloc] init];
@@ -139,13 +147,16 @@
      */
 }
 
--(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    [self refreshRetrievedDataWithLocation:[[CLLocation alloc] initWithLatitude:mapView.camera.target.latitude longitude:mapView.camera.target.longitude] andSearchOption:searchText];
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    searchBar.text = @"";
+    [self refreshRetrievedData:nil];
+    [searchBar resignFirstResponder];
 }
 
--(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    self.searchBar.text = @"";
-    [self refreshRetrievedData:nil];
+- (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    NSLog(@"been searchbuttonclicked");
+    [self refreshRetrievedDataWithLocation:[[CLLocation alloc] initWithLatitude:mapView.camera.target.latitude longitude:mapView.camera.target.longitude] andSearchOption:searchBar.text];
+    [searchBar resignFirstResponder];
 }
 
 /*

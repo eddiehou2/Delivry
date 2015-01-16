@@ -8,7 +8,9 @@
 
 #import "AboutMeViewController.h"
 #import "MainViewController.h"
+#import "HomeViewController.h"
 #import "PFUser+CurrentInformation.h"
+#import "AddPaymentCardViewController.h"
 
 @interface AboutMeViewController ()
 
@@ -22,13 +24,17 @@
     NSLog(@"%@",self.user);
     if (self.user == nil) {
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+        
         MainViewController *mainViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"mainViewController"];
         mainViewController.aboutMeViewController = self;
-        [self presentViewController:mainViewController animated:YES completion:nil];
+        [self.navigationController pushViewController:mainViewController animated:YES];
     }
     // Do any additional setup after loading the view.
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editPersonalInformation)];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -59,7 +65,9 @@
 }
 
 - (void)editPersonalInformation {
-    
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    AddPaymentCardViewController *addPaymentCardViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"addPaymentCardViewController"];
+    [self.navigationController pushViewController:addPaymentCardViewController animated:YES];
 }
 /*
 #pragma mark - Navigation

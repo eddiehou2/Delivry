@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MapViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) UISearchBar *searchBar;
 @property (assign, nonatomic) double distance;
 
 @end

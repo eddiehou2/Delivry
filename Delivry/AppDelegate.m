@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "HomeViewController.h"
 #import "Stripe.h"
+#import "CartViewController.h"
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
@@ -54,7 +55,15 @@ NSString * const GoogleMapAPIKey = @"AIzaSyCzdXSESxSJATrkF3y_WmdcIos_seuIoHY";
     NSArray *controllers = [NSArray arrayWithObjects:navigationController1,navigationController2,navigationController3, nil];
     self.tabBarController.viewControllers = controllers;
     
-    [self.window setRootViewController:self.tabBarController];
+    
+    
+    //[self.window setRootViewController:self.tabBarController];
+    
+    
+    //TESTING PURPOSE ONLY
+    CartViewController *cartViewController = [[CartViewController alloc] init];
+    [self.window setRootViewController:cartViewController];
+    
     [self.window makeKeyAndVisible];
     
     return YES;

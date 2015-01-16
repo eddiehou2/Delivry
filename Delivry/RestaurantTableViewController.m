@@ -9,6 +9,7 @@
 #import "RestaurantTableViewController.h"
 #import "RestaurantTableViewCell.h"
 #import "RestaurantDetailViewController.h"
+#import "FilterRestaurantViewController.h"
 #import <Parse/Parse.h>
 
 @interface RestaurantTableViewController ()
@@ -19,6 +20,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIBarButtonItem *filter = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(filterButtonClicked:)];
+    self.navigationItem.rightBarButtonItem = filter;
+    
+    self.priceIndex = 3;
+    self.popular = NO;
+    self.newlyOpen = NO;
+    self.discountForLargeOrder = NO;
+    self.distance = 5.0;
+    self.distanceIndex = 3;
+    self.sortBy = @"Distance";
 //    PFGeoPoint *currentPont = [PFGeoPoint geoPointWithLocation:self.currentLocation];
 //    
 //    PFQuery *query = [PFQuery queryWithClassName:@"Restaurants"];
@@ -43,6 +55,10 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     //NSLog(@"%@",self.restaurants);
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [self searchingWithFiltering];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -114,6 +130,81 @@
     return YES;
 }
 */
+
+- (void)filterButtonClicked:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    FilterRestaurantViewController *filterRestaurantViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"filterRestaurantViewController"];
+    filterRestaurantViewController.priceIndex = self.priceIndex;
+    filterRestaurantViewController.popular = self.popular;
+    filterRestaurantViewController.newlyOpen = self.newlyOpen;
+    filterRestaurantViewController.distanceIndex = self.distanceIndex;
+    filterRestaurantViewController.discountForLargeOrder = self.discountForLargeOrder;
+    filterRestaurantViewController.sortByIndex = self.sortByIndex;
+    
+    filterRestaurantViewController.keywordFilter = self.keywordFilter;
+    filterRestaurantViewController.addressFilter = self.addressFilter;
+    [self.navigationController pushViewController:filterRestaurantViewController animated:YES];
+}
+
+- (void)savingFilteringsForPriceIndex:(NSInteger)priceIndex popular:(BOOL)popular newlyOpen:(BOOL)newlyOpen distance:(double)distance distanceIndex:(NSInteger)distanceIndex discountForLargeOrder:(BOOL)discountForLargeOrder sortBy:(NSString *)sortBy sortByIndex:(NSInteger)sortByIndex keywordFilter:(NSString *)keywordFilter addressFilter:(NSString *)addressFilter {
+    self.priceIndex = priceIndex;
+    self.popular = popular;
+    self.newlyOpen = newlyOpen;
+    self.distance = distance;
+    self.distanceIndex = distanceIndex;
+    self.discountForLargeOrder = discountForLargeOrder;
+    self.sortBy = sortBy;
+    self.sortByIndex = sortByIndex;
+    
+    self.keywordFilter = keywordFilter;
+    self.addressFilter = addressFilter;
+}
+
+- (void)searchingWithFiltering {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *filterLatitude = [defaults objectForKey:@"filterLatitude"];
+    NSString *filterLongitude = [defaults objectForKey:@"filterLongitude"];
+    CLLocation *filterLocation = [[CLLocation alloc] initWithLatitude:[filterLatitude floatValue] longitude:[filterLongitude floatValue]];
+    PFGeoPoint *filterPoint = [PFGeoPoint geoPointWithLocation:filterLocation];
+    PFQuery *query = [PFQuery queryWithClassName:@"Restaurants"];
+    if (self.popular) {
+        // more than 100 orders in the past month
+    }
+    
+    if (self.newlyOpen) {
+        // added less than 2 month ago
+        int twoMonth = -60*60*24*60;
+        NSDate *twoMonthAgo = [NSDate dateWithTimeIntervalSinceNow:twoMonth];
+        [query whereKey:@"createdAt" greaterThanOrEqualTo:twoMonthAgo];
+    }
+    
+    if (self.discountForLargeOrder) {
+        // check discount table
+        PFQuery *innerQuery = [PFQuery queryWithClassName:@"Discounts"];
+        [innerQuery whereKey:@"discountType" equalTo:@"discountForLargeOrder"];
+#warning not complete
+    }
+   
+    if ([self.sortBy isEqualToString:@"Distance"]) {
+        // sort by distance by default
+    }
+    else if ([self.sortBy isEqualToString:@"Price"]) {
+        // sort by price
+        [query orderByAscending:@"restaurantPrice"];
+    }
+    [query whereKey:@"restaurantLocation" nearGeoPoint:filterPoint withinKilometers:self.distance];
+    [query whereKey:@"restaurantPrice" lessThanOrEqualTo:[NSNumber numberWithLong:self.priceIndex+1]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            self.restaurants = objects;
+            [self.tableView reloadData];
+        }
+        else {
+            NSLog(@"Error (Parse): %@", error);
+        }
+    }];
+}
+
 
 
 #pragma mark - Navigation
