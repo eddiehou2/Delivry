@@ -9,6 +9,8 @@
 
 #import "DEGeocodingServices.h"
 
+const NSString *webKey = @"AIzaSyAvpcnGjOPx_ZfCDOtxLD7H7AeFOWiReG4";
+
 @implementation DEGeocodingServices {
     NSData *_data;
 }
@@ -28,11 +30,23 @@
     NSURL *queryURL = [NSURL URLWithString:url];
     dispatch_sync(kBgQueue, ^{
         NSData *data = [NSData dataWithContentsOfURL:queryURL];
-        [self fetchedData:data];
+        [self fetchedDataGeocode:data];
     });
 }
 
-- (void) fetchedData:(NSData *)data {
+- (void) getAutocomplete:(NSString *)address {
+    NSString *geocodingBaseUrl = @"https://maps.googleapis.com/maps/api/place/autocomplete/json?";
+    NSString *url = [NSString stringWithFormat:@"%@input=%@&types=geocode&language=en&key=%@",geocodingBaseUrl,address,webKey];
+    url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURL *queryURL = [NSURL URLWithString:url];
+    dispatch_sync(kBgQueue, ^{
+        NSData *data = [NSData dataWithContentsOfURL:queryURL];
+        [self fetchedDataAutocomplete:data];
+    });
+}
+
+- (void) fetchedDataGeocode:(NSData *)data {
     NSError *error;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     
@@ -48,6 +62,40 @@
     
     geocode = gc;
 }
+
+- (void) fetchedDataAutocomplete:(NSData *)data {
+    NSError *error;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSMutableArray *predictions = [[NSMutableArray alloc] init];
+    
+    NSArray *results = [json objectForKey:@"predictions"];
+    for (NSDictionary *result in results) {
+        NSString *description = [result objectForKey:@"description"];
+        [predictions addObject:description];
+    }
+    
+    self.predictions = predictions;
+}
+
++ (NSDictionary *)findPathingBetween:(NSString *)origin to:(NSString *)destination {
+    NSString *findingPathBaseUrl = @"http://maps.googleapis.com/maps/api/directions/json?";
+    NSString *url = [NSString stringWithFormat:@"%@origin=%@&destination=%@&mode=%@&key=%@",findingPathBaseUrl,origin,destination,@"DRIVING",webKey];
+    url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURL *queryURL = [NSURL URLWithString:url];
+    NSData *data = [NSData dataWithContentsOfURL:queryURL];
+    
+    NSError *error;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSArray *routes = [json objectForKey:@"routes"];
+    NSDictionary *route = [routes objectAtIndex:0];
+    NSArray *legs = [route objectForKey:@"legs"];
+    NSDictionary *leg = [legs objectAtIndex:0];
+    NSDictionary *distance = [leg objectForKey:@"distance"];
+    NSDictionary *duration = [leg objectForKey:@"duration"];
+    return @{@"distance":[distance objectForKey:@"value"],@"duration":[duration objectForKey:@"value"]};
+}
+
 
 
 @end

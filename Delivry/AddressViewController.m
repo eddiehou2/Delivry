@@ -5,11 +5,16 @@
 //  Created by Bo Wen Hou on 2015-01-12.
 //  Copyright (c) 2015 Eddie Hou. All rights reserved.
 //
+//  Change Needed:
+//  1. tableView cellAtRow is not working properly and gets error when switching back after load
+
 
 #import "AddressViewController.h"
+#import "AddAddressViewController.h"
+#import "AddressTableViewCell.h"
 #import <Parse/Parse.h>
 
-@interface AddressViewController ()
+@interface AddressViewController () <UITableViewDataSource,UITableViewDelegate>
 
 @end
 
@@ -21,11 +26,24 @@
     UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addAddress:)];
     self.navigationItem.rightBarButtonItem = add;
     
-    for (PFObject *object in self.addresses) {
-        NSString *address = [object objectForKey:@"address"];
-        NSString *addressName = [object objectForKey:@"addressName"];
-        [self createAddressCellWithAddress:address addressName:addressName];
-    }
+    int statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    self.addressTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, statusBarHeight+self.navigationController.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-(statusBarHeight+self.navigationController.navigationBar.frame.size.height+self.tabBarController.tabBar.frame.size.height))];
+    self.addressTableView.delegate = self;
+    self.addressTableView.dataSource = self;
+    [self.view addSubview:self.addressTableView];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    PFQuery *addressQuery = [PFQuery queryWithClassName:@"UserAddress"];
+    [addressQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSLog(@"Parse (Info): Successfully find all addresses.");
+            self.addresses = [objects mutableCopy];
+        }
+        else {
+            NSLog(@"Parse (Error): %@",error);
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,28 +51,29 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)createAddressCellWithAddress:(NSString *)address addressName:(NSString *)addressName {
-    long delta = self.addressCells.count*60 + 44;
-    UIButton *addressButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    addressButton.frame = CGRectMake(0, delta, self.view.frame.size.width, 60);
-    
-    UILabel *addressNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, addressButton.frame.size.width, addressButton.frame.size.height/2)];
-    addressNameLabel.text = addressName;
-    addressNameLabel.font = [UIFont systemFontOfSize:18];
-    [addressButton addSubview:addressNameLabel];
-    
-    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, addressNameLabel.frame.size.height, addressButton.frame.size.width-10, addressButton.frame.size.height/2)];
-    addressLabel.text = address;
-    addressLabel.font = [UIFont systemFontOfSize:14];
-    [addressButton addSubview:addressLabel];
-    
-    addressButton.tag = self.addressCells.count;
-    [self.view addSubview:addressButton];
-    [self.addressCells addObject:addressButton];
+- (void)addAddress:(id)sender {
+    AddAddressViewController *addAddressViewController = [[AddAddressViewController alloc] init];
+    [self.navigationController pushViewController:addAddressViewController animated:YES];
 }
 
-- (void)addAddress:(id)sender {
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    AddressTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    if (cell == nil) {
+        UIViewController *temporaryController = [[UIViewController alloc] initWithNibName:@"Cell" bundle:nil];
+        cell = (AddressTableViewCell *)temporaryController.view;
+    }
     
+    PFObject *address = [self.addresses objectAtIndex:indexPath.row];
+    cell.addressTitle.text = [address objectForKey:@"address"];
+    cell.selectedImage.image = [[UIImage alloc] init];
+    if ([address objectForKey:@"selected"]) {
+        cell.selectedImage.backgroundColor = [UIColor redColor];
+    }
+    return cell;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.addresses.count;
 }
 
 /*

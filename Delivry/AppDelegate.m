@@ -38,11 +38,24 @@ NSString * const GoogleMapAPIKey = @"AIzaSyCzdXSESxSJATrkF3y_WmdcIos_seuIoHY";
     [GMSServices provideAPIKey:GoogleMapAPIKey];
     [Stripe setDefaultPublishableKey:StripePulishableKey];
     
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                    UIUserNotificationTypeBadge |
+                                                    UIUserNotificationTypeSound);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                             categories:nil];
+    [application registerUserNotificationSettings:settings];
+    [application registerForRemoteNotifications];
+    
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.tabBarController = [[UITabBarController alloc] init];
+    CartViewController *cartViewController = [[CartViewController alloc] init];
+    UINavigationController *navigationController4 = [[UINavigationController alloc] initWithRootViewController:cartViewController];
+    navigationController4.title = @"Cart";
+    navigationController4.navigationBar.topItem.title = @"Cart";
+    
     UINavigationController *navigationController3 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"aboutMeViewController"]];
-    navigationController3.title = @"About Me";
-    navigationController3.navigationBar.topItem.title = @"About Me";
+    navigationController3.title = @"Account";
+    navigationController3.navigationBar.topItem.title = @"Account";
 
     UINavigationController *navigationController2 = [[UINavigationController alloc] initWithRootViewController:[mainStoryboard instantiateViewControllerWithIdentifier:@"mapViewController"]];
     navigationController2.title = @"Map";
@@ -52,7 +65,7 @@ NSString * const GoogleMapAPIKey = @"AIzaSyCzdXSESxSJATrkF3y_WmdcIos_seuIoHY";
     navigationController1.title = @"Home";
     navigationController1.navigationBar.topItem.title = @"Home";
     
-    NSArray *controllers = [NSArray arrayWithObjects:navigationController1,navigationController2,navigationController3, nil];
+    NSArray *controllers = [NSArray arrayWithObjects:navigationController1,navigationController2,navigationController3,navigationController4, nil];
     self.tabBarController.viewControllers = controllers;
     
     
@@ -61,8 +74,7 @@ NSString * const GoogleMapAPIKey = @"AIzaSyCzdXSESxSJATrkF3y_WmdcIos_seuIoHY";
     
     
     //TESTING PURPOSE ONLY
-    CartViewController *cartViewController = [[CartViewController alloc] init];
-    [self.window setRootViewController:cartViewController];
+    [self.window setRootViewController:self.tabBarController];
     
     [self.window makeKeyAndVisible];
     
@@ -96,6 +108,18 @@ NSString * const GoogleMapAPIKey = @"AIzaSyCzdXSESxSJATrkF3y_WmdcIos_seuIoHY";
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication withSession: [PFFacebookUtils session]];
     
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    currentInstallation.channels = @[ @"global" ];
+    [currentInstallation saveInBackground];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [PFPush handlePush:userInfo];
 }
 
 

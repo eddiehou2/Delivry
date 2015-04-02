@@ -36,7 +36,9 @@
     
     //[self parseScripts];
     
-    [PFUser logOut];
+    // [PFUser logOut];
+    [[PFInstallation currentInstallation] setObject:[PFUser currentUser] forKey:@"user"];
+    [[PFInstallation currentInstallation] saveEventually];
     
 }
 

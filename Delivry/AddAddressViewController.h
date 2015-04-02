@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class DEGeocodingServices;
+
 @interface AddAddressViewController : UIViewController
+
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSArray *predictions;
+@property (nonatomic, strong) DEGeocodingServices *autocomplete;
+
 
 @end

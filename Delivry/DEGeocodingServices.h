@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DEGeocodingServices : NSObject
+@interface DEGeocodingServices : NSObject <NSURLConnectionDelegate>
 
 - (id) init;
 - (void)geocodeAddress: (NSString *) address;
++ (NSDictionary *)findPathingBetween:(NSString *)origin to:(NSString *)destination;
+- (void)getAutocomplete:(NSString *)address;
 
 @property (nonatomic, strong) NSDictionary *geocode;
+@property (nonatomic, strong) NSMutableArray *predictions;
 
 @end

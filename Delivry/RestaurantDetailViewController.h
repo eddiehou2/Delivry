@@ -24,5 +24,9 @@
 @property (nonatomic, strong) NSMutableArray *restaurantItems;
 @property (nonatomic, strong) NSMutableArray *quantity;
 
+@property (nonatomic, strong) NSMutableArray *cartItems;
+
+@property (nonatomic, strong) UIView *savedView;
+
 
 @end

@@ -8,12 +8,15 @@
 
 #import "AddPaymentCardViewController.h"
 #import <Parse/Parse.h>
+#import "Stripe.h"
 
 @interface AddPaymentCardViewController () <UITextFieldDelegate>
 
 @end
 
-@implementation AddPaymentCardViewController
+@implementation AddPaymentCardViewController {
+    BOOL cardNumberCorrectLength;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,7 +26,11 @@
                   action:@selector(cardNumberDidChange:)
         forControlEvents:UIControlEventEditingChanged];
     
-    self.saveBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(saveUserPaymentInformation:)];
+    [self.expireDate addTarget:self action:@selector(expireDateDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    [self.cvv addTarget:self action:@selector(cvvDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    self.saveBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(savePaymentCard:)];
     self.saveBarButtonItem.enabled = NO;
     self.navigationItem.rightBarButtonItem = self.saveBarButtonItem;
 }
@@ -52,12 +59,15 @@
 }
 
 - (void)cardNumberDidChange:(id)sender {
+    cardNumberCorrectLength = false;
     if (self.cardNumber.text.length <= 2) {
         UIImage *blankCard = [UIImage imageNamed:@""];
+        self.cardType = @"NONE";
         self.cardImage.image = blankCard;
     }
     if ([self.cardNumber.text hasPrefix:@"4"]) {
         UIImage *visaCard = [UIImage imageNamed:@"visaLogo"];
+        self.cardType = @"VISA";
         self.cardImage.image = visaCard;
         if (self.cardNumber.text.length == 4 || self.cardNumber.text.length == 9 || self.cardNumber.text.length == 14) {
             [self cardNumberInsertSpaceOrNot];
@@ -67,16 +77,12 @@
         }
         
         if (self.cardNumber.text.length == 16 || self.cardNumber.text.length == 19) {
-            // enable expire date
-            self.saveBarButtonItem.enabled = YES;
-        }
-        else {
-            // disable expire date
-            self.saveBarButtonItem.enabled = NO;
+            cardNumberCorrectLength = true;
         }
     }
     else if ([self.cardNumber.text hasPrefix:@"34"] || [self.cardNumber.text hasPrefix:@"37"]) {
         UIImage *americanExpressCard = [UIImage imageNamed:@"americanExpressLogo"];
+        self.cardType = @"AMERICANEXPRESS";
         self.cardImage.image = americanExpressCard;
         if (self.cardNumber.text.length == 4 || self.cardNumber.text.length == 11) {
             [self cardNumberInsertSpaceOrNot];
@@ -86,16 +92,12 @@
         }
         
         if (self.cardNumber.text.length == 17) {
-            // enable expire date
-            self.saveBarButtonItem.enabled = YES;
-        }
-        else {
-            // disable expire date
-            self.saveBarButtonItem.enabled = NO;
+            cardNumberCorrectLength = true;
         }
     }
     else {
         UIImage *mastercardCard = [UIImage imageNamed:@"mastercardLogo"];
+        self.cardType = @"MASTERCARD";
         self.cardImage.image = mastercardCard;
         if (self.cardNumber.text.length == 4 || self.cardNumber.text.length == 9 || self.cardNumber.text.length == 14) {
             [self cardNumberInsertSpaceOrNot];
@@ -105,15 +107,12 @@
         }
         
         if (self.cardNumber.text.length == 19) {
-            //enable expire date
-            self.saveBarButtonItem.enabled = YES;
-        }
-        else {
-            // disable expire date
-            self.saveBarButtonItem.enabled = NO;
+            cardNumberCorrectLength = true;
         }
     }
+    
     self.previousCardNumberLength = self.cardNumber.text.length;
+    [self checkForSaveEnabled];
 }
 
 - (void)cardNumberInsertSpaceOrNot {
@@ -132,8 +131,17 @@
 }
 
 - (void)expireDateDidChange:(id)sender {
-    if (self.expireDate.text.length == 2) {
-        if (self.previousExpireDateLength < self.expireDate.text.length) {
+    if (self.expireDate.text.length==1) {
+        if ([self.expireDate.text integerValue] > 1) {
+            self.expireDate.text = @"";
+        }
+    }
+    else if (self.expireDate.text.length==2) {
+        if ([self.expireDate.text integerValue] > 12 || [self.expireDate.text integerValue] < 1) {
+            self.expireDate.text = [self.expireDate.text substringToIndex:1];
+        }
+        else if (self.previousExpireDateLength < self.expireDate.text.length) {
+            NSLog(@"previous: %li //now: %li",self.previousExpireDateLength,self.expireDate.text.length);
             self.expireDate.text = [NSString stringWithFormat:@"%@/",self.expireDate.text];
         }
     }
@@ -145,53 +153,74 @@
             self.expireDate.text = [NSString stringWithFormat:@"%@/%@",[self.expireDate.text substringToIndex:self.expireDate.text.length - 1],[self.expireDate.text substringFromIndex:self.expireDate.text.length - 1]];
         }
     }
-    
-    if ([[self.expireDate.text substringToIndex:1] integerValue] == 1) {
-        // second digit has to be 0,1 or 2 => <13
+    else if (self.expireDate.text.length >= 6) {
+        self.expireDate.text = [self.expireDate.text substringToIndex:5];
     }
-    else if ([[self.expireDate.text substringToIndex:1] integerValue] == 0) {
-        // second digit has to be 1 - 9 => < 10 and > 0
+    
+    self.previousExpireDateLength = self.expireDate.text.length;
+    [self checkForSaveEnabled];
+}
+
+- (void)cvvDidChange:(id)sender {
+    if (self.cvv.text.length >=4) {
+        self.cvv.text = [self.cvv.text substringToIndex:3];
+    }
+    
+    [self checkForSaveEnabled];
+}
+
+- (void)checkForSaveEnabled {
+    if (self.cvv.text.length == 3 && self.expireDate.text.length == 5 && cardNumberCorrectLength) {
+        self.saveBarButtonItem.enabled = YES;
     }
     else {
-        self.expireDate.text = @"";
+        self.saveBarButtonItem.enabled = NO;
     }
+}
+
+//- (void)saveUserPaymentInformation:(id)sender {
+//    PFObject *userPaymentInfoObject = [PFObject objectWithClassName:@"UserPaymentInfo"];
+//    [userPaymentInfoObject setObject:self.cardType forKey:@"cardType"];
+//    [userPaymentInfoObject setObject:[self.cardNumber.text substringFromIndex:self.cardNumber.text.length - 4] forKey:@"cardNumber"];
+//    [userPaymentInfoObject setObject:self.expireDate.text forKey:@"expiryDate"];
+//    [userPaymentInfoObject setObject:[NSNumber numberWithBool:NO] forKey:@"selected"];
+//    [userPaymentInfoObject setACL:[PFACL ACLWithUser:[PFUser currentUser]]];
+//    [userPaymentInfoObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        if (succeeded) {
+//            NSLog(@"Info (Parse): Successfully created user payment information.");
+//            [self returnToPaymentViewController];
+//        }
+//        else {
+//            NSLog(@"Error (Parse): %@",error);
+//        }
+//    }];
+//}
+
+- (void)savePaymentCard:(id)sender {
+    STPCard *card = [[STPCard alloc] init];
+    NSLog(@"CHECKING ALL PARAMS TO SEE NIL: cardNumber:: %@ // expMonth:: %ld // expYear:: %ld // cvv:: %@",[self.cardNumber.text stringByReplacingOccurrencesOfString:@" " withString:@""],(long)[[self.expireDate.text substringToIndex:2] integerValue],2000 + [[self.expireDate.text substringFromIndex:3] integerValue],self.cvv.text);
     
-    if ([[self.expireDate.text substringFromIndex:4] integerValue] >= 15) {
-        self.expireDate.text = @"";
-    }
-}
-
-- (void)saveUserPaymentInformation:(id)sender {
-    PFObject *userPaymentInfoObject = [PFObject objectWithClassName:@"UserPaymentInfo"];
-    [userPaymentInfoObject setObject:self.cardType forKey:@"cardType"];
-    [userPaymentInfoObject setObject:[self.cardNumber.text substringFromIndex:self.cardNumber.text.length - 4] forKey:@"cardNumber"];
-    [userPaymentInfoObject setObject:self.expireDate.text forKey:@"expiryDate"];
-    [userPaymentInfoObject setObject:[NSNumber numberWithBool:NO] forKey:@"selected"];
-    [userPaymentInfoObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"Info (Parse): Successfully created user payment information.");
-            [self savePaymentCard:userPaymentInfoObject];
+    card.number = [self.cardNumber.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    card.expMonth = [[self.expireDate.text substringToIndex:2] integerValue];
+    card.expYear = 2000 + [[self.expireDate.text substringFromIndex:3] integerValue];
+    card.cvc = self.cvv.text;
+    [Stripe createTokenWithCard:card completion:^(STPToken *token, NSError *error) {
+        if (!error) {
+            NSLog(@"CHECKING ALL PARAMS TO SEE NIL: TOKEN:: %@ // USER:: %@",token,[PFUser currentUser]);
+            [PFCloud callFunctionInBackground:@"createCustomer" withParameters:@{@"token":token.tokenId,@"user":[PFUser currentUser].objectId,@"cardType":self.cardType,@"cardNumber":[self.cardNumber.text substringFromIndex:self.cardNumber.text.length - 4],@"expiryDate":self.expireDate.text} block:^(id object, NSError *error) {
+                if (!error) {
+                    NSLog(@"NICE!");
+                    
+                    //[self saveUserPaymentInformation:nil];
+                    [self returnToPaymentViewController];
+                }
+                else {
+                    NSLog(@"FUCK! Error: %@", error);
+                }
+            }];
         }
         else {
-            NSLog(@"Error (Parse): %@",error);
-        }
-    }];
-}
-
-- (void)savePaymentCard:(PFObject *)userPaymentInfoObject {
-    PFObject *paymentCardObject = [PFObject objectWithClassName:@"PaymentCards"];
-    [paymentCardObject setObject:[self.cardNumber.text stringByReplacingOccurrencesOfString:@" " withString:@""] forKey:@"cardNumber"];
-    [paymentCardObject setObject:[self.expireDate.text substringFromIndex:3] forKey:@"expiryYear"];
-    [paymentCardObject setObject:[self.expireDate.text substringToIndex:2] forKey:@"expiryMonth"];
-    // CVV?
-    [paymentCardObject setObject:userPaymentInfoObject forKey:@"paymentCard"];
-    [paymentCardObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"Info (Parse): Successfully created payment card.");
-            [self returnToPaymentViewController];
-        }
-        else {
-            NSLog(@"Error (Parse): %@",error);
+            NSLog(@"Error (Stripe): %@",error);
         }
     }];
 }

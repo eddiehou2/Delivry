@@ -11,6 +11,6 @@
 @interface AddressViewController : UIViewController
 
 @property(nonatomic,strong) NSMutableArray *addresses;
-@property(nonatomic,strong) NSMutableArray *addressCells;
+@property(nonatomic,strong) UITableView *addressTableView;
 
 @end

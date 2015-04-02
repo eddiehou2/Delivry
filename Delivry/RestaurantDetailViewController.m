@@ -5,11 +5,17 @@
 //  Created by Eddie Hou on 2014-12-27.
 //  Copyright (c) 2014 Eddie Hou. All rights reserved.
 //
+//  Changes Needed:
+//  1. Error: Restaurant name/price/distance/rating labels move randomly in Y
+//  2. Function: After submit, return to previous page or go to cart page or show number of items in cart with red notification number
+//  3. Fix: Add ACL for cart items and transaction when ordering/ Don't need ACL for bundles
+
 
 #import "RestaurantDetailViewController.h"
 #import "MainViewController.h"
 #import "Stripe.h"
 #import <Parse/Parse.h>
+#import "LoadingView.h"
 
 @interface RestaurantDetailViewController ()
 
@@ -18,7 +24,51 @@
 @implementation RestaurantDetailViewController
 
 - (void)viewDidLoad {
+    self.savedView = self.view;
     [super viewDidLoad];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    self.view = [[LoadingView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    [self reloadRestaurantDetailItems];
+}
+
+- (void)reloadRestaurantDetailItems {
+    PFQuery *query = [PFQuery queryWithClassName:@"RestaurantItems"];
+    [query whereKey:@"restaurant" equalTo:self.restaurant];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSLog(@"Info (Parse): Successfully retrieved menu items for restaurant.");
+            self.restaurantItems = [objects mutableCopy];
+            PFQuery *cartQuery = [PFQuery queryWithClassName:@"CartItems"];
+            [cartQuery whereKey:@"restaurantItem" containedIn:self.restaurantItems];
+            [cartQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if (!error) {
+                    NSLog(@"Info (Parse): Successfully retrieved cart item for restaurant.");
+                    self.cartItems = [objects mutableCopy];
+                    [self reloadRestaurantDetailView];
+                }
+                else {
+                    NSLog(@"Error (Parse): %@",error);
+                }
+            }];
+        }
+        else {
+            NSLog(@"Error (Parse): %@",error);
+        }
+    }];
+}
+
+- (void)reloadRestaurantDetailView {
+    NSInteger noItems = self.restaurantItems.count;
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 10, self.view.bounds.size.width, self.view.bounds.size.height-(self.navigationController.navigationBar.frame.size.height + self.tabBarController.tabBar.frame.size.height + 10))];
+    [scrollView setContentSize:CGSizeMake(scrollView.bounds.size.width, self.image.bounds.size.height + noItems*25 + 40)];
+    scrollView.alwaysBounceVertical = YES;
+    
+    [scrollView addSubview:self.savedView];
+    
+    
     // Do any additional setup after loading the view.
     self.image.image = [UIImage imageNamed:@"app_icon"];
     self.nameLabel.text = [self.restaurant objectForKey:@"restaurantName"];
@@ -28,53 +78,55 @@
     PFGeoPoint *point = [PFGeoPoint geoPointWithLocation:self.currentLocation];
     self.distanceLabel.text = [NSString stringWithFormat:@"%.2f km",[point distanceInKilometersTo:[self.restaurant objectForKey:@"restaurantLocation"]]];
     
-    
-    PFQuery *query = [PFQuery queryWithClassName:@"RestaurantItems"];
-    [query whereKey:@"restaurant" equalTo:self.restaurant];
-    self.restaurantItems = [[query findObjects] mutableCopy];
     self.quantity = [[NSMutableArray alloc] init];
     
-    NSInteger noItems = self.restaurantItems.count;
-    
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.image.bounds.size.height + self.navigationController.navigationBar.frame.size.height + 10, self.view.bounds.size.width, self.view.bounds.size.height-(self.image.bounds.size.height + self.navigationController.navigationBar.frame.size.height + self.tabBarController.tabBar.frame.size.height + 10))];
-    [scrollView setContentSize:CGSizeMake(scrollView.bounds.size.width, noItems*25 + 40)];
     for (int i = 0; i < noItems; i++) {
         PFObject *restaurantItem = self.restaurantItems[i];
-        UILabel *item = [[UILabel alloc] initWithFrame:CGRectMake(10, i*25, (3/4.0)*(scrollView.bounds.size.width - 10), 21)];
+        UILabel *item = [[UILabel alloc] initWithFrame:CGRectMake(10, self.image.bounds.size.height + i*25, (3/4.0)*(scrollView.bounds.size.width - 10), 21)];
         item.text = [NSString stringWithFormat:@"%@",[restaurantItem objectForKey:@"itemName"]];
         item.tag=4 * i;
         [scrollView addSubview:item];
         
-        UILabel *quantity = [[UILabel alloc] initWithFrame:CGRectMake((3/4.0)*(scrollView.bounds.size.width - 10)+10+50, i*25, (1/4.0)*(scrollView.bounds.size.width - 10)-50, 21)];
-        quantity.text = @"0";
+        UILabel *quantity = [[UILabel alloc] initWithFrame:CGRectMake((3/4.0)*(scrollView.bounds.size.width - 10)+10+50, self.image.bounds.size.height + i*25, (1/4.0)*(scrollView.bounds.size.width - 10)-50, 21)];
+        int itemQuantity = 0;
+        for (int j = 0; j < self.cartItems.count ; j++) {
+            PFObject *cartItem = [self.cartItems objectAtIndex:j];
+            PFObject *cartRestaurantItem = [cartItem objectForKey:@"restaurantItem"];
+            if ([cartRestaurantItem.objectId isEqualToString:restaurantItem.objectId]) {
+                itemQuantity = [[cartItem objectForKey:@"quantity"] intValue];
+            }
+        }
+        quantity.text = [NSString stringWithFormat:@"%i",itemQuantity];
         quantity.tag=4 * i + 1;
         [scrollView addSubview:quantity];
         [self.quantity addObject:quantity];
         
         UIButton *add = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        add.frame = CGRectMake((3/4.0)*(scrollView.bounds.size.width - 10)+10, i*25, 21, 21);
+        add.frame = CGRectMake((3/4.0)*(scrollView.bounds.size.width - 10)+10, self.image.bounds.size.height + i*25, 21, 21);
         [add setTitle:@"+" forState:UIControlStateNormal];
         add.tag=4 * i + 2;
         [add addTarget:self action:@selector(increaseItemQuantity:) forControlEvents:UIControlEventTouchUpInside];
-        add.enabled = YES;
+        add.enabled = ([quantity.text intValue] < 100);
         [scrollView addSubview:add];
         
         UIButton *minus = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        minus.frame = CGRectMake((3/4.0)*(scrollView.bounds.size.width - 10)+10+25, i*25, 21, 21);
+        minus.frame = CGRectMake((3/4.0)*(scrollView.bounds.size.width - 10)+10+25, self.image.bounds.size.height + i*25, 21, 21);
         [minus setTitle:@"-" forState:UIControlStateNormal];
         minus.tag=4 * i + 3;
         [minus addTarget:self action:@selector(decreaseItemQuantity:) forControlEvents:UIControlEventTouchUpInside];
-        minus.enabled = NO;
+        minus.enabled = ([quantity.text intValue] > 0);
         [scrollView addSubview:minus];
     }
     UIButton *submit = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    submit.frame = CGRectMake(scrollView.bounds.size.width - 110, noItems*25+5, 100, 30);
+    submit.frame = CGRectMake(scrollView.bounds.size.width - 110, self.image.bounds.size.height + noItems*25+5, 100, 30);
     [submit setTitle:@"Submit" forState:UIControlStateNormal];
     [scrollView addSubview:submit];
     
     [self.view addSubview:scrollView];
     
     [submit addTarget:self action:@selector(submitOrder:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.view = scrollView;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,27 +136,26 @@
 
 -(void) increaseItemQuantity:(id) sender{
     UIButton *add = (UIButton *) sender;
+    UIButton *minus = (UIButton *) [self.view viewWithTag:(add.tag+1)];
     UILabel *label = (UILabel *) [self.view viewWithTag:(add.tag-1)];
     label.text = [NSString stringWithFormat:@"%i",([label.text intValue]+1)];
-    if ([label.text intValue] > 0) {
-        UIButton *minus = (UIButton *) [self.view viewWithTag:(add.tag+1)];
-        minus.enabled = YES;
-    }
+    minus.enabled = ([label.text intValue] > 0);
+    add.enabled = ([label.text intValue] < 100);
 }
 
 -(void) decreaseItemQuantity:(id) sender{
     UIButton *minus = (UIButton *) sender;
+    UIButton *add = (UIButton *) [self.view viewWithTag:(minus.tag-1)];
     UILabel *label = (UILabel *) [self.view viewWithTag:(minus.tag-2)];
     label.text = [NSString stringWithFormat:@"%i",([label.text intValue]-1)];
-    if ([label.text intValue] < 1) {
-        minus.enabled = NO;
-    }
+    minus.enabled = ([label.text intValue] > 0);
+    add.enabled = ([label.text intValue] < 100);
 }
 
 
 -(void) submitOrder:(id) sender {
-    if ([PFUser currentUser] != nil) {
-        [self createBundle];
+    if ([PFUser currentUser]) {
+        [self checkForTransaction];
     }
     else {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No User" message:@"An user must be logged on to use the Delivry feature of the app. Please login and try again." preferredStyle:UIAlertControllerStyleAlert];
@@ -129,7 +180,7 @@
     // Create a bundle for the order
     PFObject *bundleObject = [PFObject objectWithClassName:@"Bundles"];
     [bundleObject setObject:self.restaurant forKey:@"restaurant"];
-    [bundleObject setObject:[NSDate date] forKey:@"delivryBy"];
+    [bundleObject setObject:[NSDate dateWithTimeIntervalSinceNow:3600] forKey:@"delivryBy"];
     [bundleObject setObject:[PFGeoPoint geoPointWithLocation:self.currentLocation] forKey:@"delivryTo"];
     [bundleObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         NSLog(@"createdBundle? %@",succeeded ? @"Yes" : @"No");
@@ -143,11 +194,30 @@
     }];
 }
 
+- (void)checkForTransaction {
+    PFQuery *query = [PFQuery queryWithClassName:@"CartItems"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            if (objects == nil || [objects count] == 0) {
+                [self createTransaction:nil];
+            }
+            else {
+                PFObject *transactionObject = [[objects objectAtIndex:0] objectForKey:@"transaction"];
+                [self createOrder:transactionObject];
+            }
+            NSLog(@"Info (Parse): Successfully found transaction.");
+        }
+        else {
+            NSLog(@"Error (Parse): %@",error);
+        }
+    }];
+}
+
 -(void) createTransaction:(PFObject *)bundleObject {
     PFObject *transactionObject = [PFObject objectWithClassName:@"Transactions"];
-    [transactionObject setObject:bundleObject forKey:@"bundle"];
+    // [transactionObject setObject:bundleObject forKey:@"bundle"];
     [transactionObject setObject:[PFUser currentUser] forKey:@"user"];
-    [transactionObject setObject:[PFGeoPoint geoPointWithLocation:self.currentLocation] forKey:@"delivryLocation"];
+    // [transactionObject setObject:[PFGeoPoint geoPointWithLocation:self.currentLocation] forKey:@"delivryLocation"];
     [transactionObject setObject:@"Address goes here" forKey:@"delivryAddress"];
     [transactionObject setObject:[NSNumber numberWithBool:NO] forKey:@"charged"];
     [transactionObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -162,56 +232,68 @@
 }
 
 -(void) createOrder:(PFObject *)transactionObject {
-    NSMutableArray *orderItems = [[NSMutableArray alloc] init];
-    double totalPrice = 0.00;
+    NSMutableArray *cartItems = [[NSMutableArray alloc] init];
+    NSMutableArray *removeCartItems = [[NSMutableArray alloc] init];
     // Create a list of OrderItems
     for (int i = 0; i < self.restaurantItems.count; i++) {
         UILabel *quantityLabel = self.quantity[i];
         PFObject *restaurantItem = self.restaurantItems[i];
+        PFObject *previousCartItem = nil;
+        for (int j = 0; j < self.cartItems.count; j++) {
+            PFObject *cartItem = [self.cartItems objectAtIndex:j];
+            PFObject *cartRestaurantItem = [cartItem objectForKey:@"restaurantItem"];
+            if ([cartRestaurantItem.objectId isEqual:restaurantItem.objectId]) {
+                previousCartItem = cartItem;
+            }
+        }
         if (![quantityLabel.text isEqual: @"0"]) {
             NSNumber *quantity = [[NSNumber alloc] initWithInt:[quantityLabel.text intValue]];
             
-            PFObject *orderItem = [PFObject objectWithClassName:@"OrderItems"];
-            [orderItem setObject:transactionObject forKey:@"transaction"];
-            [orderItem setObject:restaurantItem forKey:@"orderedItem"];
-            [orderItem setObject:quantity forKey:@"quantity"];
-            [orderItems addObject:orderItem];
-            
-            totalPrice += [quantity intValue] * [[restaurantItem objectForKey:@"itemPrice"] floatValue];
-        }
-    }
-    [PFObject saveAllInBackground:orderItems block:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"Info (Parse): Order Items have been successfully saved.");
-            NSLog(@"Total Price: %f", totalPrice);
-            [self createPayment:transactionObject withAmount:totalPrice];
+            if (previousCartItem == nil) {
+                PFObject *cartItem = [PFObject objectWithClassName:@"CartItems"];
+                [cartItem setObject:transactionObject forKey:@"transaction"];
+                [cartItem setObject:restaurantItem forKey:@"restaurantItem"];
+                [cartItem setObject:quantity forKey:@"quantity"];
+                [cartItems addObject:cartItem];
+            }
+            else {
+                [previousCartItem setObject:quantity forKey:@"quantity"];
+                [cartItems addObject:previousCartItem];
+//                
+//                PFObject *removeCartItem = [PFObject objectWithClassName:@"CartItems"];
+//                [removeCartItem setObjectId:previousCartItem.objectId];
+//                
+//                [removeCartItems addObject:removeCartItem];
+            }
         }
         else {
-            NSLog(@"Error (Parse): %@",error);
+            if (previousCartItem == nil) {
+                // do nothing
+                NSLog(@"blah");
+            }
+            else {
+                PFObject *removeCartItem = [PFObject objectWithClassName:@"CartItems"];
+                [removeCartItem setObjectId:previousCartItem.objectId];
+                
+                [removeCartItems addObject:removeCartItem];
+            }
         }
-    }];
-}
-
--(void) createPayment:(PFObject *)transactionObject withAmount:(double) totalPrice {
-    STPCard *card = [[STPCard alloc] init];
-    card.number = @"4242424242424242";
-    card.expMonth = 5;
-    card.expYear = 2015;
-    card.cvc = @"969";
-    [Stripe createTokenWithCard:card completion:^(STPToken *token, NSError *error) {
-        if (!error) {
-            NSLog(@"Token: %@",token);
-            [PFCloud callFunctionInBackground:@"orderedItems" withParameters:@{@"totalPrice":[[NSNumber alloc] initWithDouble:(ceil(totalPrice*100)/100)],@"currency":@"cad",@"cardToken":[token tokenId],@"name":@"Name Goes Here Later",@"email":@"Email Goes Here Later",@"address":@"Address Goes Here Later",@"city_province":@"City Province Goes Here Later",@"zip":@"Zip Goes Here Later",@"transactionID":transactionObject.objectId} block:^(id object, NSError *error) {
-                if (!error) {
-                    NSLog(@"Info (Stripe): A charge of %.2f has been successfully charged.",totalPrice);
+    }
+    
+    [PFObject deleteAllInBackground:removeCartItems block:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"Info (Parse): Cart Items have been successfully removed.");
+            [PFObject saveAllInBackground:cartItems block:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    NSLog(@"Info (Parse): Cart Items have been successfully saved.");
                 }
                 else {
-                    NSLog(@"Error (Stripe): %@",error);
+                    NSLog(@"Error (Parse): %@",error);
                 }
             }];
         }
         else {
-            NSLog(@"Error (Stripe): %@",error);
+            NSLog(@"Error (Parse): %@",error);
         }
     }];
 }

@@ -12,5 +12,6 @@
 
 @property (nonatomic, strong) NSMutableArray *paymentCards;
 @property (nonatomic, strong) NSMutableArray *paymentCardCells;
+@property (nonatomic, strong) UIScrollView *scrollView;
 
 @end

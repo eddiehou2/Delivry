@@ -11,6 +11,7 @@
 #import "HomeViewController.h"
 #import "PFUser+CurrentInformation.h"
 #import "AddPaymentCardViewController.h"
+#import "PaymentViewController.h"
 
 @interface AboutMeViewController ()
 
@@ -38,8 +39,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self loggedInWith:[PFUser getInformationFromCurrentUser]];
-    [self refreshUIWithUserInformation];
+    //[self loggedInWith:[PFUser getInformationFromCurrentUser]];
+    //[self refreshUIWithUserInformation];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,9 +66,12 @@
 }
 
 - (void)editPersonalInformation {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    AddPaymentCardViewController *addPaymentCardViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"addPaymentCardViewController"];
-    [self.navigationController pushViewController:addPaymentCardViewController animated:YES];
+//    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    AddPaymentCardViewController *addPaymentCardViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"addPaymentCardViewController"];
+//    [self.navigationController pushViewController:addPaymentCardViewController animated:YES];
+    
+    PaymentViewController *paymentViewController = [[PaymentViewController alloc] init];
+    [self.navigationController pushViewController:paymentViewController animated:YES];
 }
 /*
 #pragma mark - Navigation

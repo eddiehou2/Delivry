@@ -16,6 +16,8 @@
 @property(nonatomic,strong) NSMutableArray *restaurantItems;
 @property(nonatomic,strong) NSMutableArray *cartItems;
 @property(nonatomic,strong) UIScrollView *scrollView;
+@property(nonatomic,strong) UIView *subtotalView;
+@property(nonatomic,strong) PFObject *transactionObject;
 
 @property(nonatomic,assign) long yPosition;
 

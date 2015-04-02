@@ -12,9 +12,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *cardImage;
 @property (weak, nonatomic) IBOutlet UITextField *cardNumber;
 @property (weak, nonatomic) IBOutlet UITextField *expireDate;
-@property (assign, nonatomic) double previousCardNumberLength;
+@property (weak, nonatomic) IBOutlet UITextField *cvv;
+
+@property (assign, nonatomic) long previousCardNumberLength;
 @property (strong, nonatomic) UIBarButtonItem *saveBarButtonItem;
-@property (assign, nonatomic) double previousExpireDateLength;
+@property (assign, nonatomic) long previousExpireDateLength;
 
 @property (nonatomic, strong) NSString *cardType;
 @end
